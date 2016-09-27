@@ -5,6 +5,7 @@
 #include <string.h>
 #include "contourDetection.h"
 #include "computeRateRGB.h"
+#include "histogram.h"
 
 int main(int argc, char * argv[]){
 
@@ -117,7 +118,7 @@ int main(int argc, char * argv[]){
 	} else if (fileType == 2) {
 
 		rgb8 ** I;
-		I = LoadPPm_rgb8matrix(filename, &nrl, &nrh, &ncl, &nch);
+		I = LoadPPM_rgb8matrix(filename, &nrl, &nrh, &ncl, &nch);
 
 	}
 
