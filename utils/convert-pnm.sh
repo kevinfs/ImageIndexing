@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILES=~/IMG/*.jpg
+FILES=images/*.jpg
 
 for f in $FILES
 do
