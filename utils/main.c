@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <unistd.h>
 #include "NRC/def.h"
 #include "NRC/nrio.h"
 #include "NRC/nrarith.h"
@@ -19,8 +20,36 @@ int main(int argc, char * argv[]){
 	int ** sobel_h;
 	int ** sobel_v;
 
-
 	int i,j;
+
+
+	int verbose = 0;
+	int silent = 0;
+	int contourDetection = 0;
+	int txColor = 0;
+	int histogram = 0;
+	char * filename;
+    int opt;
+
+    while ((opt = getopt(argc, argv, "vscth")) != -1) {
+        switch (opt) {
+        case 'v': verbose = 1; break;
+        case 's': silent = 1; break;
+        case 'c': contourDetection = 1; break;
+        case 't': txColor = 1; break;
+        case 'h': histogram = 1; break;
+        default:
+            fprintf(stderr, "Usage: %s [-vscth] [file...]\n", argv[0]);
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    if(optind < argc) {
+    	filename = argv[optind];
+    }
+
+    printf("ahah %s\n", filename);
+exit(0);
 
 	// I=LoadPGM_bmatrix("NRC/cubesx3.pgm",&nrl,&nrh,&ncl,&nch);
 	I = LoadPGM_bmatrix("rice.pgm", &nrl, &nrh, &ncl, &nch);

@@ -1,19 +1,22 @@
 CC=gcc
 
-all : main lib
+all : main
 
-exemple : exemple.c lib
-	${CC} -o exemple exemple.c nrio.o nralloc.o nrarith.o
+main : main.c NRC/nrio.o NRC/nralloc.o NRC/nrarith.o
+	${CC} -o imageProcessing main.c NRC/nrio.o NRC/nralloc.o NRC/nrarith.o
 
-main : main.c lib
-	${CC} -o imageProcessing main.c nrio.o nralloc.o nrarith.o
+NRC/nrio.o: NRC/nrio.c
+	${CC} -c $< -o $@
 
-lib : NRC/nrio.c NRC/nralloc.c NRC/nrarith.c
-	${CC} -c NRC/nrio.c NRC/nralloc.c NRC/nrarith.c
+NRC/nralloc.o: NRC/nralloc.c
+	${CC} -c $< -o $@
+
+NRC/nrarith.o: NRC/nrarith.c
+	${CC} -c $< -o $@
 
 #
 # Clean
 #
 
 clean :
-	rm imageProcessing *.o
+	rm imageProcessing NRC/*.o
