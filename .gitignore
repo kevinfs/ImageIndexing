@@ -2,6 +2,7 @@
 .classpath
 .project
 .DS_Store
+*.o
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
