@@ -44,23 +44,13 @@ void convolution(byte ** src, long height, long width, int ** filtre, int filter
 
 void norme_gradient(byte ** srcH, byte ** srcV, long height, long width, byte ** dest) {
 
-	// long nrh,nrl,nch,ncl;
 	long r, c;
-	// byte **Ix;
-	// byte **Iy;
-	//byte **R;
-
-	dest = bmatrix(0, height, 0, width);
 
 	for (r = 0; r < height; ++r) {
 		for (c = 0; c < width; ++c) {
 			dest[r][c] = sqrt(pow(srcH[r][c], 2) + pow(srcV[r][c], 2));
 		}
 	}
-
-	// free_bmatrix(Ix, nrl, nrh, ncl, nch);
-	// free_bmatrix(Iy, nrl, nrh, ncl, nch);
-	// free_bmatrix(R, nrl, nrh, ncl, nch);
 
 }
 
@@ -94,6 +84,18 @@ long getNumberOfContourPixels(byte ** src, long height, long width) {
 
 }
 
+long getTotalNumberOfPixels(byte ** src, long height, long width) {
+
+	return height * width;
+
+}
+
+double getImageTexture(byte ** src, long height, long width) {
+	long p = getNumberOfContourPixels(src, height, width);
+	long n = getTotalNumberOfPixels(src, height, width);
+
+	return (double) p / (double) n;
+}
 
 
 

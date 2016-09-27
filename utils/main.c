@@ -97,75 +97,111 @@ int main(int argc, char * argv[]){
 		byte **RV;
 		byte **NORME;
 		I = LoadPGM_bmatrix(filename, &nrl, &nrh, &ncl, &nch);
-		RH = bmatrix(nrl, nrh, ncl, nch);
-		RV = bmatrix(nrl, nrh, ncl, nch);
-		NORME = bmatrix(nrl, nrh, ncl, nch);
 
-		// Gradient Horizontal
-		sobel_h = imatrix(0, 3, 0, 3);
-		sobel_h[0][0] = sobel_h[2][0] = -1;
-		sobel_h[0][2] = sobel_h[2][2] = +1;
-		sobel_h[0][1] = sobel_h[1][1] = sobel_h[2][1] = 0;
-		sobel_h[1][0] = -2;
-		sobel_h[1][2] = +2;
-		convolution(I, nrh, nch, sobel_h, 3, RH);
+		if (contourDetection) {
 
-		if (!silent) {
-			char * filenameH = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen("-h.pgm"));
-			strcpy(filenameH, strippedFilename);
-			strcat(filenameH, "-h.pgm");
-			SavePGM_bmatrix(RH, nrl, nrh, ncl, nch, filenameH);
-			free(filenameH);
+			if (verbose)
+    			puts("Starting contour detection");
+
+			RH = bmatrix(nrl, nrh, ncl, nch);
+			RV = bmatrix(nrl, nrh, ncl, nch);
+			NORME = bmatrix(nrl, nrh, ncl, nch);
+
+			if (verbose)
+    			puts("Horizontal gradient");
+
+			// Gradient Horizontal
+			sobel_h = imatrix(0, 3, 0, 3);
+			sobel_h[0][0] = sobel_h[2][0] = -1;
+			sobel_h[0][2] = sobel_h[2][2] = +1;
+			sobel_h[0][1] = sobel_h[1][1] = sobel_h[2][1] = 0;
+			sobel_h[1][0] = -2;
+			sobel_h[1][2] = +2;
+			convolution(I, nrh, nch, sobel_h, 3, RH);
+
+			if (!silent) {
+				if (verbose)
+    				puts("Saving horizontal gradient to file");
+				char * filenameH = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen("-h.pgm"));
+				strcpy(filenameH, strippedFilename);
+				strcat(filenameH, "-h.pgm");
+				SavePGM_bmatrix(RH, nrl, nrh, ncl, nch, filenameH);
+				free(filenameH);
+			}
+
+			if (verbose)
+    			puts("Vertical gradient");
+
+			// Gradient Vertical
+			sobel_v = imatrix(0, 3, 0, 3);
+			sobel_v[0][0] = sobel_v[0][2] = -1;
+			sobel_v[2][0] = sobel_v[2][2] = +1;
+			sobel_v[1][0] = sobel_v[1][1] = sobel_v[1][2] = 0;
+			sobel_v[0][1] = -2;
+			sobel_v[2][1] = +2;
+			convolution(I, nrh, nch, sobel_v, 3, RV);
+
+			if (!silent) {
+				if (verbose)
+    				puts("Saving vertical gradient to file");
+				char * filenameV = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen("-v.pgm"));
+				strcpy(filenameV, strippedFilename);
+				strcat(filenameV, "-v.pgm");
+				SavePGM_bmatrix(RV, nrl, nrh, ncl, nch, filenameV);
+				free(filenameV);
+			}
+
+			if (verbose)
+    			puts("Computing normalisation of gradient");
+
+			// Norme du gradient
+			norme_gradient(RH, RV, nrh, nch, NORME);
+
+			if (!silent) {
+				if (verbose)
+    				puts("Saving normalised gradient to file");
+				char * filenameN = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen("-n.pgm"));
+				strcpy(filenameN, strippedFilename);
+				strcat(filenameN, "-n.pgm");
+				SavePGM_bmatrix(NORME, nrl, nrh, ncl, nch, filenameN);
+				free(filenameN);
+			}
+
+			if (verbose)
+    			puts("Thresholding");
+
+			// Seuillage
+			seuillage(NORME, nrh, nch, threshold);
+
+			if (!silent) {
+				if (verbose)
+    				puts("Saving thresholded values to file");
+				char * filenameN = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen("-ns.pgm"));
+				strcpy(filenameN, strippedFilename);
+				strcat(filenameN, "-ns.pgm");
+				SavePGM_bmatrix(NORME, nrl, nrh, ncl, nch, filenameN);
+				free(filenameN);
+			}
+
+			if (verbose) {
+				long n = getNumberOfContourPixels(NORME, nrh, nch);
+				printf("Number of pixels : %ld\n", n);
+			}
+
+			double n = getImageTexture(NORME, nrh, nch);
+			printf("Texture : %f\n", nn);
+
+			if (verbose)
+    			puts("Freeing image structures used");
+
+			free_bmatrix(I, nrl, nrh, ncl, nch);
+			free_bmatrix(RH, nrl, nrh, ncl, nch);
+			free_bmatrix(RV, nrl, nrh, ncl, nch);
+			free_bmatrix(NORME, nrl, nrh, ncl, nch);
+			free_imatrix(sobel_h, 0, 3, 0, 3);
+			free_imatrix(sobel_v, 0, 3, 0, 3);
+
 		}
-
-		// Gradient Vertical
-		sobel_v = imatrix(0, 3, 0, 3);
-		sobel_v[0][0] = sobel_v[0][2] = -1;
-		sobel_v[2][0] = sobel_v[2][2] = +1;
-		sobel_v[1][0] = sobel_v[1][1] = sobel_v[1][2] = 0;
-		sobel_v[0][1] = -2;
-		sobel_v[2][1] = +2;
-		convolution(I, nrh, nch, sobel_v, 3, RV);
-
-		if (!silent) {
-			char * filenameV = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen("-v.pgm"));
-			strcpy(filenameV, strippedFilename);
-			strcat(filenameV, "-v.pgm");
-			SavePGM_bmatrix(RV, nrl, nrh, ncl, nch, filenameV);
-			free(filenameV);
-		}
-
-		// Norme du gradient
-		norme_gradient(RH, RV, nrh, nch, NORME);
-
-		if (!silent) {
-			char * filenameN = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen("-n.pgm"));
-			strcpy(filenameN, strippedFilename);
-			strcat(filenameN, "-n.pgm");
-			SavePGM_bmatrix(NORME, nrl, nrh, ncl, nch, filenameN);
-			free(filenameN);
-		}
-
-		// Seuillage
-		seuillage(NORME, nrh, nch, threshold);
-
-		if (!silent) {
-			char * filenameN = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen("-ns.pgm"));
-			strcpy(filenameN, strippedFilename);
-			strcat(filenameN, "-ns.pgm");
-			SavePGM_bmatrix(NORME, nrl, nrh, ncl, nch, filenameN);
-			free(filenameN);
-		}
-
-		long n = getNumberOfContourPixels(NORME, nrh, nch);
-		printf("NB OF PIXELS : %ld\n", n);
-
-		free_bmatrix(I, nrl, nrh, ncl, nch);
-		free_bmatrix(RH, nrl, nrh, ncl, nch);
-		free_bmatrix(RV, nrl, nrh, ncl, nch);
-		free_bmatrix(NORME, nrl, nrh, ncl, nch);
-		free_imatrix(sobel_h, 0, 3, 0, 3);
-		free_imatrix(sobel_v, 0, 3, 0, 3);
 
 	}
 	////////
