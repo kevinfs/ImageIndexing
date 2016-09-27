@@ -188,7 +188,7 @@ int main(int argc, char * argv[]){
 				printf("Number of pixels : %ld\n", n);
 			}
 
-			double n = getImageTexture(NORME, nrh, nch);
+			double nn = getImageTexture(NORME, nrh, nch);
 			printf("Texture : %f\n", nn);
 
 			if (verbose)
