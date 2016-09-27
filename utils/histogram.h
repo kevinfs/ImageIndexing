@@ -9,3 +9,4 @@
 
 int* histogram1Channel(byte **image, long nrl, long nrh, long ncl, long nch);
 int** histogram3Channel(rgb8 **imageRGB, long nrl, long nrh, long ncl, long nch);
+double getBhattacharyyaDistance(int *h1, int *h2, int nbPixels);

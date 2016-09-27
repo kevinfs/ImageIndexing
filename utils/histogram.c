@@ -27,3 +27,27 @@ int** histogram3Channel(rgb8 **imageRGB, long nrl, long nrh, long ncl, long nch)
 	}
 	return hist;
 }
+
+double getBhattacharyyaDistance(int *h1, int *h2, int nbPixels){
+
+	double sumh1 = 0, sumh2 = 0, multsumh1h2, BC = 0.0, result;
+	int i;
+	
+	for(i = 0; i < 256; i++){
+		sumh1 += ((double)h1[i]/nbPixels);
+		sumh2 += ((double)h2[i]/nbPixels);
+	}
+
+	multsumh1h2 = sumh1*sumh2;
+	
+	for(i = 0; i < 256; i++){
+		BC += sqrt( ( ((double)(h1[i])/nbPixels)*((double)(h2[i])/nbPixels) )/multsumh1h2 );
+	}
+	printf("bc : %f\n", BC);
+	printf("%f\n", log(1));
+	result = -log(BC);
+	printf("result = %f\n", result);
+
+return result;
+}
+
