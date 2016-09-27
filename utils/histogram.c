@@ -3,7 +3,7 @@
 int* histogram1Channel(byte **image, long nrl, long nrh, long ncl, long nch){
 	int hist[256] = { 0 };
 	int i = 0;
-	int x, y;
+	int x, y; 
 	for (x = nrl; x <= nrh; x++){
 		for (y = ncl; y <= nch; y++){
 			hist[image[x][y]]++;
