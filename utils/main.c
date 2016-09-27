@@ -9,8 +9,6 @@
 int main(int argc, char * argv[]){
 
 	long nrh,nrl,nch,ncl;
-	byte **I;
-	byte **R;
 	int ** moyenneur;
 	int ** sobel_h;
 	int ** sobel_v;
@@ -75,54 +73,54 @@ int main(int argc, char * argv[]){
 
 	if (verbose)
 		printf("Opening file %s...\n", filename);
-	I = LoadPGM_bmatrix(filename, &nrl, &nrh, &ncl, &nch);
-	
-	R = bmatrix(nrl, nrh, ncl, nch);
+	if (fileType == 1) {
 
-exit(0);
+		byte **I;
+		byte **R;
+		I = LoadPGM_bmatrix(filename, &nrl, &nrh, &ncl, &nch);
+		R = bmatrix(nrl, nrh, ncl, nch);
 
-	// Filtre Moyenneur
-	moyenneur = imatrix(0, 3, 0, 3);
-	moyenneur[0][0] = moyenneur[0][1] = moyenneur[0][2]
-		= moyenneur[1][0] = moyenneur[1][1] = moyenneur[1][2]
-		= moyenneur[2][0] = moyenneur[2][1] = moyenneur[2][2]
-		= 1;
-	// convolution(I, nrh, nch, moyenneur, 3, R);
-	// SavePGM_bmatrix(R,nrl,nrh,ncl,nch,"rice_moyenne.pgm");
+		// Gradient Horizontal
+		sobel_h = imatrix(0, 3, 0, 3);
+		sobel_h[0][0] = sobel_h[2][0] = -1;
+		sobel_h[0][2] = sobel_h[2][2] = +1;
+		sobel_h[0][1] = sobel_h[1][1] = sobel_h[2][1] = 0;
+		sobel_h[1][0] = -2;
+		sobel_h[1][2] = +2;
+		convolution(I, nrh, nch, sobel_h, 3, R);
+		SavePGM_bmatrix(R, nrl, nrh, ncl, nch, "rice_ix.pgm");
 
-	// Gradient Horizontal
-	sobel_h = imatrix(0, 3, 0, 3);
-	sobel_h[0][0] = sobel_h[2][0] = -1;
-	sobel_h[0][2] = sobel_h[2][2] = +1;
-	sobel_h[0][1] = sobel_h[1][1] = sobel_h[2][1] = 0;
-	sobel_h[1][0] = -2;
-	sobel_h[1][2] = +2;
-	convolution(I, nrh, nch, sobel_h, 3, R);
-	SavePGM_bmatrix(R, nrl, nrh, ncl, nch, "rice_ix.pgm");
+		// Gradient Vertical
+		sobel_v = imatrix(0, 3, 0, 3);
+		sobel_v[0][0] = sobel_v[0][2] = -1;
+		sobel_v[2][0] = sobel_v[2][2] = +1;
+		sobel_v[1][0] = sobel_v[1][1] = sobel_v[1][2] = 0;
+		sobel_v[0][1] = -2;
+		sobel_v[2][1] = +2;
+		convolution(I, nrh, nch, sobel_v, 3, R);
+		SavePGM_bmatrix(R, nrl, nrh, ncl, nch, "rice_iy.pgm");
 
-	// Gradient Vertical
-	sobel_v = imatrix(0, 3, 0, 3);
-	sobel_v[0][0] = sobel_v[0][2] = -1;
-	sobel_v[2][0] = sobel_v[2][2] = +1;
-	sobel_v[1][0] = sobel_v[1][1] = sobel_v[1][2] = 0;
-	sobel_v[0][1] = -2;
-	sobel_v[2][1] = +2;
-	convolution(I, nrh, nch, sobel_v, 3, R);
-	SavePGM_bmatrix(R, nrl, nrh, ncl, nch, "rice_iy.pgm");
+		// Norme du gradient
+		norme_gradient(filename);
 
-	// Norme du gradient
-	norme_gradient();
+		// Seuillage
+		I = LoadPGM_bmatrix("rice_norme.pgm", &nrl, &nrh, &ncl, &nch);
+		seuillage(I, nrh, nch, 9);
+		SavePGM_bmatrix(I, nrl, nrh, ncl, nch, "rice_norme_seuille.pgm");
 
-	// Seuillage
-	I = LoadPGM_bmatrix("rice_norme.pgm", &nrl, &nrh, &ncl, &nch);
-	seuillage(I, nrh, nch, 9);
-	SavePGM_bmatrix(I, nrl, nrh, ncl, nch, "rice_norme_seuille.pgm");
+		free_bmatrix(I, nrl, nrh, ncl, nch);
+		free_bmatrix(R, nrl, nrh, ncl, nch);
+		free_imatrix(moyenneur, 0, 3, 0, 3);
+		free_imatrix(sobel_h, 0, 3, 0, 3);
+		free_imatrix(sobel_v, 0, 3, 0, 3);
 
-	free_bmatrix(I, nrl, nrh, ncl, nch);
-	free_bmatrix(R, nrl, nrh, ncl, nch);
-	free_imatrix(moyenneur, 0, 3, 0, 3);
-	free_imatrix(sobel_h, 0, 3, 0, 3);
-	free_imatrix(sobel_v, 0, 3, 0, 3);
+	} else if (fileType == 2) {
+
+		rgb8 ** I;
+		I = LoadPPm_rgb8matrix(filename, &nrl, &nrh, &ncl, &nch);
+
+	}
+
 
 
 	return 1;

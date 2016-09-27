@@ -1,3 +1,5 @@
+#include <math.h>
+#include <stdio.h>
 #include "NRC/def.h"
 #include "NRC/nrio.h"
 #include "NRC/nrarith.h"
@@ -7,7 +9,7 @@
 #define _DETECTIONCONTOURS_H_
 
 void convolution(byte ** src, long height, long width, int ** filtre, int filter_size, byte ** dest);
-void norme_gradient();
+void norme_gradient(char * filename);
 void seuillage(byte ** src, long height, long width, byte seuil);
 
 #endif

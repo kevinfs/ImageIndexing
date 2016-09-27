@@ -42,7 +42,7 @@ void convolution(byte ** src, long height, long width, int ** filtre, int filter
 	}
 }
 
-void norme_gradient() {
+void norme_gradient(char * filename) {
 
 	long nrh,nrl,nch,ncl;
 	long r, c;
