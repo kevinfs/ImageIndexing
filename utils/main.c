@@ -26,14 +26,14 @@ int main(int argc, char * argv[]){
 
     while ((opt = getopt(argc, argv, "vscth")) != -1) {
         switch (opt) {
-        case 'v': verbose = 1; break;
-        case 's': silent = 1; break;
-        case 'c': contourDetection = 1; break;
-        case 't': txColor = 1; break;
-        case 'h': histogram = 1; break;
-        default:
-            fprintf(stderr, "Usage: %s [-vscth] [file...]\n", argv[0]);
-            exit(EXIT_FAILURE);
+	        case 'v': verbose = 1; break;
+	        case 's': silent = 1; break;
+	        case 'c': contourDetection = 1; break;
+	        case 't': txColor = 1; break;
+	        case 'h': histogram = 1; break;
+	        default:
+	            fprintf(stderr, "Usage: %s [-vscth] [file...]\n", argv[0]);
+	            exit(EXIT_FAILURE);
         }
     }
 
@@ -46,6 +46,7 @@ int main(int argc, char * argv[]){
     }
 
     printf("ahah %s\n", filename);
+    
 exit(0);
 
 	// I=LoadPGM_bmatrix("NRC/cubesx3.pgm",&nrl,&nrh,&ncl,&nch);
@@ -101,6 +102,10 @@ exit(0);
 	return 1;
 
 }
+
+
+
+
 
 
 
