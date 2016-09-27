@@ -1,6 +1,6 @@
 #include "histogram.h"
 
-int* histogram1Channel(byte **image, long nrl, long nrh, long ncl, long nch){
+int * histogram1Channel(byte **image, long nrl, long nrh, long ncl, long nch){
 	int hist[256] = { 0 };
 	int i = 0;
 	int x, y; 
@@ -12,7 +12,7 @@ int* histogram1Channel(byte **image, long nrl, long nrh, long ncl, long nch){
 	return hist;
 }
 
-int** histogram3Channel(rgb8 **imageRGB, long nrl, long nrh, long ncl, long nch){
+int ** histogram3Channel(rgb8 **imageRGB, long nrl, long nrh, long ncl, long nch){
 	int hist[3][256] = { { 0 } };
 	int x, y;
 	int r = 0;

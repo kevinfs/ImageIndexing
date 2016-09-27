@@ -4,6 +4,10 @@
 .DS_Store
 *.o
 utils/imageProcessing
+utils/images/*-h.pgm
+utils/images/*-v.pgm
+utils/images/*-n.pgm
+utils/images/*-ns.pgm
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
