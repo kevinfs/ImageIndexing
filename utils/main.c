@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <unistd.h>
+#include <string.h>
 #include "contourDetection.h"
 #include "computeRateRGB.h"
 
@@ -22,6 +23,7 @@ int main(int argc, char * argv[]){
 	int contourDetection = 0;
 	int txColor = 0;
 	int histogram = 0;
+	int fileType = 0; // 1 for pgm, 2 for ppm
 	char * filename;
     int opt;
 
@@ -38,23 +40,46 @@ int main(int argc, char * argv[]){
         }
     }
 
-    printf("%d %d\n", optind, argc);
-
     if(optind < argc) {
     	filename = argv[optind];
     } else {
-    	filename = NULL;
+    	puts("Too few arguments, please choose a filename");
+    	fprintf(stderr, "Usage: %s [-vscth] [file...]\n", argv[0]);
+    	exit(EXIT_FAILURE);
     }
 
-    printf("ahah %s\n", filename);
+    if (verbose) {
+    	puts("Verbose mode used");
+    	if (silent)
+    		puts("Silent mode used, intermediate images will not be saved");
+    	if (contourDetection)
+    		puts("Contour detection requested");
+    	if (txColor)
+    		puts("Color tx requested");
+    	if (histogram)
+    		puts("Histogram requested");
+    }
 
-exit(0);
+	if (verbose)
+		printf("Analyzing file %s...\n", filename);
+    if(strstr(filename, "pgm") != NULL) {
+	    fileType = 1;
+	    puts("File recognized as PGM");
+	} else if(strstr(filename, "ppm") != NULL) {
+	    fileType = 2;
+	    puts("File recognized as PPM");
+	} else {
+    	fprintf(stderr, "%s can only support PGM or PPM files\n", argv[0]);
+    	exit(EXIT_FAILURE);
+	}
 
-	// I=LoadPGM_bmatrix("NRC/cubesx3.pgm",&nrl,&nrh,&ncl,&nch);
-	I = LoadPGM_bmatrix("rice.pgm", &nrl, &nrh, &ncl, &nch);
+	if (verbose)
+		printf("Opening file %s...\n", filename);
+	I = LoadPGM_bmatrix(filename, &nrl, &nrh, &ncl, &nch);
 	
 	R = bmatrix(nrl, nrh, ncl, nch);
 
+exit(0);
 
 	// Filtre Moyenneur
 	moyenneur = imatrix(0, 3, 0, 3);

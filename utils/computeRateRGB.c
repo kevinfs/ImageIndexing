@@ -1,6 +1,6 @@
 #include "computeRateRGB.h"
 
-TauxRGB computeTauxRGB(rgb8 **imageRGB, long nrl,long nrh,long ncl,long nch){
+TauxRGB computeTauxRGB(rgb8 **imageRGB, long nrl, long nrh, long ncl, long nch) {
 
 	int y, x, i, nbPixels;
 	TauxRGB tauxRGB;
@@ -20,5 +20,5 @@ TauxRGB computeTauxRGB(rgb8 **imageRGB, long nrl,long nrh,long ncl,long nch){
 	moyG = sumG/nbPixels;
 	moyB = sumB/nbPixels;
 	
-return tauxRGB;
+	return tauxRGB;
 }
