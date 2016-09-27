@@ -11,6 +11,9 @@ contourDetection.o: contourDetection.c contourDetection.h
 tauxRGB.o: tauxRGB.c tauxRGB.h
 	${CC} -c $< -o $@
 
+histogram.o: histogram.c histogram.h
+	${CC} -c $< -o $@
+
 NRC/nrio.o: NRC/nrio.c NRC/nrio.h
 	${CC} -c $< -o $@
 
