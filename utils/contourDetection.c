@@ -24,7 +24,7 @@ void convolution(byte ** src, long height, long width, int ** filtre, int filter
 		sum = max_pos;
 	else
 		sum = -1*max_neg;
-	printf("sum %li\n", sum);
+	//printf("sum %li\n", sum);
 
 	for (r = side; r < max_height; ++r) {
 		for (c = side; c < max_width; ++c) {
@@ -42,30 +42,25 @@ void convolution(byte ** src, long height, long width, int ** filtre, int filter
 	}
 }
 
-void norme_gradient(char * filename) {
+void norme_gradient(byte ** srcH, byte ** srcV, long height, long width, byte ** dest) {
 
-	long nrh,nrl,nch,ncl;
+	// long nrh,nrl,nch,ncl;
 	long r, c;
-	byte **Ix;
-	byte **Iy;
-	byte **R;
+	// byte **Ix;
+	// byte **Iy;
+	//byte **R;
 
-	Ix = LoadPGM_bmatrix("rice_ix.pgm", &nrl, &nrh, &ncl, &nch);
-	Iy = LoadPGM_bmatrix("rice_iy.pgm", &nrl, &nrh, &ncl, &nch);
+	dest = bmatrix(0, height, 0, width);
 
-	R = bmatrix(nrl, nrh, ncl, nch);
-
-	for (r = nrl; r < nrh; ++r) {
-		for (c = ncl; c < nch; ++c) {
-			R[r][c] = sqrt(pow(Ix[r][c], 2) + pow(Iy[r][c], 2));
+	for (r = 0; r < height; ++r) {
+		for (c = 0; c < width; ++c) {
+			dest[r][c] = sqrt(pow(srcH[r][c], 2) + pow(srcV[r][c], 2));
 		}
 	}
 
-	SavePGM_bmatrix(R, nrl, nrh, ncl, nch, "rice_norme.pgm");
-
-	free_bmatrix(Ix, nrl, nrh, ncl, nch);
-	free_bmatrix(Iy, nrl, nrh, ncl, nch);
-	free_bmatrix(R, nrl, nrh, ncl, nch);
+	// free_bmatrix(Ix, nrl, nrh, ncl, nch);
+	// free_bmatrix(Iy, nrl, nrh, ncl, nch);
+	// free_bmatrix(R, nrl, nrh, ncl, nch);
 
 }
 
@@ -81,6 +76,21 @@ void seuillage(byte ** src, long height, long width, byte seuil) {
 				src[r][c] = 0;
 		}
 	}
+
+}
+
+long getNumberOfContourPixels(byte ** src, long height, long width) {
+
+	long r, c, result = 0;
+
+	for (r = 0; r < height; ++r) {
+		for (c = 0; c < width; ++c) {
+			if (src[r][c] > 0)
+				result++;
+		}
+	}
+
+	return result;
 
 }
 
