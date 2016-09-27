@@ -2,13 +2,13 @@ CC=gcc
 
 all : main
 
-main : main.c contourDetection.o NRC/nrio.o NRC/nralloc.o NRC/nrarith.o
-	${CC} -o imageProcessing main.c contourDetection.o NRC/nrio.o NRC/nralloc.o NRC/nrarith.o
+main : main.c contourDetection.o computeRateRGB.o NRC/nrio.o NRC/nralloc.o NRC/nrarith.o
+	${CC} -o imageProcessing main.c contourDetection.o computeRateRGB.o NRC/nrio.o NRC/nralloc.o NRC/nrarith.o
 
 contourDetection.o: contourDetection.c contourDetection.h
 	${CC} -c $< -o $@
 
-tauxRGB.o: tauxRGB.c tauxRGB.h
+computeRateRGB.o: computeRateRGB.c computeRateRGB.h
 	${CC} -c $< -o $@
 
 histogram.o: histogram.c histogram.h

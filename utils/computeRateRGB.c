@@ -14,7 +14,7 @@ TauxRGB computeTauxRGB(rgb8 **imageRGB, long nrl,long nrh,long ncl,long nch){
 		}
 	}
 
-	nbPixel = x*y;
+	nbPixels = x * y;
 	
 	moyR = sumR/nbPixels;
 	moyG = sumG/nbPixels;

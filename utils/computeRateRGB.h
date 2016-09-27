@@ -1,11 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-
-#include "def.h"
-#include "nrio.h"
-#include "nrarith.h"
-#include "nralloc.h"
+#include "NRC/def.h"
+#include "NRC/nrio.h"
+#include "NRC/nrarith.h"
+#include "NRC/nralloc.h"
 
 typedef struct{
 	double tauxR;

@@ -3,6 +3,7 @@
 #include <math.h>
 #include <unistd.h>
 #include "contourDetection.h"
+#include "computeRateRGB.h"
 
 int main(int argc, char * argv[]){
 
@@ -46,7 +47,7 @@ int main(int argc, char * argv[]){
     }
 
     printf("ahah %s\n", filename);
-    
+
 exit(0);
 
 	// I=LoadPGM_bmatrix("NRC/cubesx3.pgm",&nrl,&nrh,&ncl,&nch);
