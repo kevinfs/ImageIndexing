@@ -13,5 +13,7 @@ typedef struct {
 } TauxRGB;
 
 TauxRGB computeTauxRGB(rgb8 **imageRGB, long nrl,long nrh,long ncl,long nch);
+TauxRGB computeRGBLevel(rgb8 **imageRGB, long nrl, long nrh, long ncl, long nch);
+
 
 #endif
