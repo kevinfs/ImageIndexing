@@ -10,6 +10,7 @@
 
 void convolution(byte ** src, long height, long width, int ** filtre, int filter_size, byte ** dest);
 void norme_gradient(byte ** srcH, byte ** srcV, long height, long width, byte ** dest);
+double getGradientMean(byte ** src, long height, long width);
 void seuillage(byte ** src, long height, long width, byte seuil);
 long getNumberOfContourPixels(byte ** src, long height, long width);
 long getTotalNumberOfPixels(byte ** src, long height, long width);

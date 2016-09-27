@@ -54,6 +54,21 @@ void norme_gradient(byte ** srcH, byte ** srcV, long height, long width, byte **
 
 }
 
+double getGradientMean(byte ** src, long height, long width) {
+
+	long r, c;
+	double total = 0.0;
+
+	for (r = 0; r < height; ++r) {
+		for (c = 0; c < width; ++c) {
+			total+= src[r][c];
+		}
+	}
+
+	return total / (height * width);
+
+}
+
 void seuillage(byte ** src, long height, long width, byte seuil) {
 
 	long r, c;

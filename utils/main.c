@@ -23,21 +23,23 @@ int main(int argc, char * argv[]){
 	int contourDetection = 0;
 	int txColor = 0;
 	int histogram = 0;
+	int mean = 0;
 	int threshold = 9;
 	int fileType = 0; // 1 for pgm, 2 for ppm
 	char * filename;
     int opt;
 
-    while ((opt = getopt(argc, argv, "vscxht:")) != -1) {
+    while ((opt = getopt(argc, argv, "vscxhmt:")) != -1) {
         switch (opt) {
 	        case 'v': verbose = 1; break;
 	        case 's': silent = 1; break;
 	        case 'c': contourDetection = 1; break;
 	        case 'x': txColor = 1; break;
 	        case 'h': histogram = 1; break;
+	        case 'm': mean = 1; break;
 	        case 't': threshold = atoi(optarg); break;
 	        default:
-	            fprintf(stderr, "Usage: %s [-vscth] [file...]\n", argv[0]);
+	            fprintf(stderr, "Usage: %s [-vscxhm] [-t 20] [file...]\n", argv[0]);
 	            exit(EXIT_FAILURE);
         }
     }
@@ -98,7 +100,7 @@ int main(int argc, char * argv[]){
 		byte **NORME;
 		I = LoadPGM_bmatrix(filename, &nrl, &nrh, &ncl, &nch);
 
-		if (contourDetection) {
+		if (contourDetection || mean) {
 
 			if (verbose)
     			puts("Starting contour detection");
@@ -167,6 +169,15 @@ int main(int argc, char * argv[]){
 				free(filenameN);
 			}
 
+			if (mean) {
+				if (verbose)
+    				puts("Finding mean");
+
+				double gradientMean = getGradientMean(NORME, nrh, nch);
+				printf("Mean of gradient accross image : %f\n", gradientMean);
+
+			}
+
 			if (verbose)
     			puts("Thresholding");
 
@@ -188,8 +199,8 @@ int main(int argc, char * argv[]){
 				printf("Number of pixels : %ld\n", n);
 			}
 
-			double nn = getImageTexture(NORME, nrh, nch);
-			printf("Texture : %f\n", nn);
+			double imageTextureRatio = getImageTexture(NORME, nrh, nch);
+			printf("Texture : %f\n", imageTextureRatio);
 
 			if (verbose)
     			puts("Freeing image structures used");
