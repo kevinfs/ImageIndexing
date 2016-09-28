@@ -53,7 +53,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
-public class mainGUI extends JFrame{
+public class MainGUI extends JFrame{
 	
 	private ArrayList<Integer> a=new ArrayList<Integer>();
 	final JFileChooser fc = new JFileChooser();
