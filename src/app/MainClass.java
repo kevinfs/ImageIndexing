@@ -9,11 +9,14 @@ public class MainClass {
 		
 		final OJDBC dB = new OJDBC();
 		
-		int[] hist = new int[256];
+		int[] hist = new int[4];
 		
-		for(int i=0; i<256; i++) hist[i] = i;
+		 hist[0] = 98;
+		 hist[1] = 12;
+		 hist[2] = 98;
+		 hist[3] = 12;
 			
-		dB.addImageData(3, 4, 6, 100, 0, hist);
-		
+		//dB.addImageData(3, 4, 6, 100, 0, hist);
+		dB.batacharya(1, 4, hist);
 	}
 }
