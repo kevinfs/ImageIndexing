@@ -82,7 +82,7 @@ int main(int argc, char * argv[]){
 	    fileType = 3;
 	    puts("File recognized as JPG");
 	} else {
-    	fprintf(stderr, "%s can only support PGM or PPM files\n", argv[0]);
+    	fprintf(stderr, "%s can only support JPG, PGM or PPM files\n", argv[0]);
     	exit(EXIT_FAILURE);
 	}
 
@@ -104,13 +104,22 @@ int main(int argc, char * argv[]){
 	////////
 	// PGM
 	////////
-	if (fileType == 1) {
+	if (fileType == 1 || fileType == 3) {
 
 		byte **I;
 		byte **RH;
 		byte **RV;
 		byte **NORME;
-		I = LoadPGM_bmatrix(filename, &nrl, &nrh, &ncl, &nch);
+
+		// Cleanup the name, to be sure to open a PGM file
+		char * filenamePGM = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen(".pgm"));
+    	strcpy(filenamePGM, strippedFilename);
+    	strcat(filenamePGM, ".pgm");
+
+    	if (verbose)
+			puts("Opening PGM file");
+
+		I = LoadPGM_bmatrix(filenamePGM, &nrl, &nrh, &ncl, &nch);
 
 		if (contourDetection || mean) {
 
@@ -230,26 +239,52 @@ int main(int argc, char * argv[]){
 			free_imatrix(sobel_h, 0, 3, 0, 3);
 			free_imatrix(sobel_v, 0, 3, 0, 3);
 
-			// Saving to file
-			if (verbose)
-				puts("Saving descriptors to file");
-
-			saveDescriptorsToFile(filename, colorType, mean, ratioTexture, ratioR, ratioG, ratioB, histogramV);
-
 		}
 
 	}
 	////////
 	// PPM
 	////////
-	else if (fileType == 2) {
+	if (fileType == 2 || fileType == 3) {
 
 		rgb8 ** I;
-		I = LoadPPM_rgb8matrix(filename, &nrl, &nrh, &ncl, &nch);
+
+		// Cleanup the name, to be sure to open a PGM file
+		char * filenamePPM = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen(".ppm"));
+    	strcpy(filenamePPM, strippedFilename);
+    	strcat(filenamePPM, ".ppm");
+
+    	if (verbose)
+			puts("Opening PPM file");
+
+		I = LoadPPM_rgb8matrix(filenamePPM, &nrl, &nrh, &ncl, &nch);
+
+    	if (txColor) {
+
+			if (verbose)
+				puts("Computing color ratios");
+
+			TauxRGB tx = computeTauxRGB(I, nrl, nrh, ncl, nch);
+			ratioR = tx.tauxR;
+			ratioG = tx.tauxG;
+			ratioB = tx.tauxB;
+
+			printf("Color ratios : R[%f] G[%f] B[%f]\n", ratioR, ratioG, ratioB);
+
+		}
+
+		free_rgb8matrix(I, nrl, nrh, ncl, nch);
 
 	}
 
+	// Saving to file
+	if (verbose)
+		puts("Saving descriptors to file");
+
+	saveDescriptorsToFile(filename, colorType, mean, ratioTexture, ratioR, ratioG, ratioB, histogramV);
+
 	free(strippedFilename);
+	free(histogramV);
 
 	return 1;
 
