@@ -113,10 +113,12 @@ public class MainPanel  extends JPanel implements ListSelectionListener {
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("YOLO");
 		JList list = (JList)e.getSource();
-        updateLabel(results.toArray(new String[0])[list.getSelectedIndex()]);
-        System.out.println("YOLO");
+		//System.out.println(list.getSelectedIndex() + " " +results.size() );
+		if(results.size() < list.getSelectedIndex() || list.getSelectedIndex() < 0){
+			updateLabel(results.toArray(new String[0])[0]);
+		}
+		else updateLabel(results.toArray(new String[0])[list.getSelectedIndex()]);
 	}
 	
 	protected void updateLabel (String path) {
