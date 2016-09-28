@@ -25,11 +25,11 @@ public class MainPanel  extends JPanel implements ListSelectionListener {
 
 	private JLabel picture;
 	private JList queryList;
-	//private JList imgList;
     private JSplitPane splitPane;
     private String[] imageNames = { "C:\\Users\\Mehdi\\Documents\\DJMaxTrilogy\\DJMax@141122_203220.jpg" ,
     		"C:\\Users\\Mehdi\\Documents\\DJMaxTrilogy\\DJMax@141122_203223.jpg"};
     private ArrayList<String> results = new ArrayList<String>();
+    private ArrayList<String> query = new ArrayList<String>();
     private DefaultListModel<String> queryListModel = new DefaultListModel<String>();
 	private DefaultListModel<String> imgListModel = new DefaultListModel<String>();
 	private JScrollPane listScroller;
@@ -59,28 +59,34 @@ public class MainPanel  extends JPanel implements ListSelectionListener {
         queryList.setSelectedIndex(0);
         queryList.addListSelectionListener(this);
         queryList.addMouseListener(mouseListener);
-         
+        
+        
         
         listScrollPane = new JScrollPane(queryList);
         picture = new JLabel();
         picture.setFont(picture.getFont().deriveFont(Font.ITALIC));
         picture.setHorizontalAlignment(JLabel.CENTER);
-         
         listScroller = new JScrollPane(picture);
+        
+         
+        
+        Dimension minimumSize = new Dimension(100, 50);
  
         //Create a split pane with the two scroll panes in it.
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                                    listScrollPane, listScroller);
         splitPane.setOneTouchExpandable(true);
         splitPane.setDividerLocation(150);
- 
+        
+        
+        
         //Provide minimum sizes for the two components in the split pane.
-        Dimension minimumSize = new Dimension(100, 50);
         listScrollPane.setMinimumSize(minimumSize);
         listScroller.setMinimumSize(minimumSize);
  
         //Provide a preferred size for the split pane.
         splitPane.setPreferredSize(new Dimension(400, 200));
+        
         //updateLabel(imageNames[queryList.getSelectedIndex()]);
 	}
 	

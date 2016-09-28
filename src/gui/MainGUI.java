@@ -12,6 +12,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -24,6 +26,7 @@ public class MainGUI extends JFrame{
 	final JFileChooser fc = new JFileChooser();
 	private MainGUI instance = this;
 	private MainPanel mPanel;
+	private MainPanel mPanel2;
 	// Menu	
 	private JMenuBar menuBar = new JMenuBar();
 	private JMenu file = new JMenu("File");
@@ -116,7 +119,10 @@ public class MainGUI extends JFrame{
 		menuBar.add(file);
 		setJMenuBar(menuBar);
 		mPanel = new MainPanel();
-		getContentPane().add(mPanel.getSplitPane());
+		mPanel2 = new MainPanel();
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,mPanel.getSplitPane(),mPanel2.getSplitPane());
+		
+		getContentPane().add(splitPane);
 	}
 	    
 	
