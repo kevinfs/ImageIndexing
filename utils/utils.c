@@ -1,5 +1,37 @@
 #include "utils.h"
 
+void saveDescriptorsToFile(char * filename, char * colorType, double gradientMean, double ratioTexture, double ratioR, double ratioG, double ratioB, int * histogram) {
+
+    FILE *fp;
+    char * strippedFilename;
+    char * descriptorsFile;
+    int i;
+
+    // Find picture name
+    strippedFilename = removeExtension(filename, '.', '/');
+
+    // Make correct path for descriptors file
+    descriptorsFile = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen("-descriptors.txt"));
+    strcpy(descriptorsFile, strippedFilename);
+    strcat(descriptorsFile, "-descriptors.txt");
+
+    // Open/create descriptors file
+    fp = fopen(descriptorsFile, "w+");
+    if (fp == NULL)
+        puts("Unable to write to descriptor file, aborting...");
+
+    // Write global descriptors
+    fprintf(fp, "%s\n%s\n%f\n%f\n%f\n%f\n%f\n", strippedFilename, colorType, gradientMean, ratioTexture, ratioR, ratioG, ratioB);
+
+    // Write histogram
+    if (histogram != NULL)
+        for (i = 0; i < 256; ++i)
+            fprintf(fp, "%d ", histogram[i]);
+
+    fclose(fp);
+
+}
+
 char *removeExtension (char* mystr, char dot, char sep) {
     char *retstr, *lastdot, *lastsep;
 
