@@ -15,6 +15,10 @@ public class ImageDescriptor {
 	private double ratioB;
 	private Histogram<Integer> histogram;
 
+	public ImageDescriptor() {
+		super();
+	}
+
 	public ImageDescriptor(String fileName, String colorType,
 			double gradientMean, double ratioTexture, double ratioR,
 			double ratioG, double ratioB, Histogram<Integer> histogram) {
