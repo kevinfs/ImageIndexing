@@ -14,7 +14,7 @@ utils/images/*-descriptors.txt
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar
 *.war
 *.ear
 
