@@ -5,6 +5,7 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
-char *removeExtension (char* mystr, char dot, char sep);
+void saveDescriptorsToFile(char * filename, char * colorType, double gradientMean, double ratioTexture, double ratioR, double ratioG, double ratioB, int * histogram);
+char * removeExtension (char * mystr, char dot, char sep);
 
 #endif

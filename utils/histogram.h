@@ -1,3 +1,7 @@
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "NRC/def.h" 
 #include "NRC/nrio.h"
 #include "NRC/nrarith.h"

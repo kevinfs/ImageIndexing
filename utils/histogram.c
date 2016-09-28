@@ -1,7 +1,7 @@
 #include "histogram.h"
 
 int * histogram1Channel(byte **image, long nrl, long nrh, long ncl, long nch){
-	int hist[256] = { 0 };
+	int * hist = (int *) calloc(sizeof(int), 256);
 	int i = 0;
 	int x, y; 
 	for (x = nrl; x <= nrh; x++){

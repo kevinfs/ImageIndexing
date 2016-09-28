@@ -10,7 +10,7 @@
 
 int main(int argc, char * argv[]){
 
-	long nrh,nrl,nch,ncl;
+	long nrh, nrl, nch, ncl;
 	int ** moyenneur;
 	int ** sobel_h;
 	int ** sobel_v;
@@ -25,7 +25,7 @@ int main(int argc, char * argv[]){
 	int histogram = 0;
 	int mean = 0;
 	int threshold = 9;
-	int fileType = 0; // 1 for pgm, 2 for ppm
+	int fileType = 0; // 1 for pgm, 2 for ppm, 3 for jpg
 	char * filename;
     int opt;
 
@@ -78,8 +78,11 @@ int main(int argc, char * argv[]){
 	} else if(strstr(filename, "ppm") != NULL) {
 	    fileType = 2;
 	    puts("File recognized as PPM");
+	} else if(strstr(filename, "jpg") != NULL) {
+	    fileType = 3;
+	    puts("File recognized as JPG");
 	} else {
-    	fprintf(stderr, "%s can only support PGM or PPM files\n", argv[0]);
+    	fprintf(stderr, "%s can only support JPG, PGM or PPM files\n", argv[0]);
     	exit(EXIT_FAILURE);
 	}
 
@@ -89,16 +92,34 @@ int main(int argc, char * argv[]){
 	char * strippedFilename;
 	strippedFilename = removeExtension(filename, '.', '/');
 
+	char * colorType = "gray";
+	double gradientMean = 0.0;
+	double ratioTexture = 0.0;
+	double ratioR = 0.0;
+	double ratioG = 0.0;
+	double ratioB = 0.0;
+	int * histogramV = NULL;
+
+
 	////////
 	// PGM
 	////////
-	if (fileType == 1) {
+	if (fileType == 1 || fileType == 3) {
 
 		byte **I;
 		byte **RH;
 		byte **RV;
 		byte **NORME;
-		I = LoadPGM_bmatrix(filename, &nrl, &nrh, &ncl, &nch);
+
+		// Cleanup the name, to be sure to open a PGM file
+		char * filenamePGM = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen(".pgm"));
+    	strcpy(filenamePGM, strippedFilename);
+    	strcat(filenamePGM, ".pgm");
+
+    	if (verbose)
+			puts("Opening PGM file");
+
+		I = LoadPGM_bmatrix(filenamePGM, &nrl, &nrh, &ncl, &nch);
 
 		if (contourDetection || mean) {
 
@@ -173,7 +194,7 @@ int main(int argc, char * argv[]){
 				if (verbose)
     				puts("Finding mean");
 
-				double gradientMean = getGradientMean(NORME, nrh, nch);
+				gradientMean = getGradientMean(NORME, nrh, nch);
 				printf("Mean of gradient accross image : %f\n", gradientMean);
 
 			}
@@ -199,8 +220,14 @@ int main(int argc, char * argv[]){
 				printf("Number of pixels : %ld\n", n);
 			}
 
-			double imageTextureRatio = getImageTexture(NORME, nrh, nch);
-			printf("Texture : %f\n", imageTextureRatio);
+			ratioTexture = getImageTexture(NORME, nrh, nch);
+			printf("Texture : %f\n", ratioTexture);
+
+			// Computing histogram
+			if (verbose)
+				puts("Computing histogram w/ one channel");
+
+			histogramV = histogram1Channel(I, nrl, nrh, ncl, nch);
 
 			if (verbose)
     			puts("Freeing image structures used");
@@ -218,14 +245,46 @@ int main(int argc, char * argv[]){
 	////////
 	// PPM
 	////////
-	else if (fileType == 2) {
+	if (fileType == 2 || fileType == 3) {
 
 		rgb8 ** I;
-		I = LoadPPM_rgb8matrix(filename, &nrl, &nrh, &ncl, &nch);
+
+		// Cleanup the name, to be sure to open a PGM file
+		char * filenamePPM = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen(".ppm"));
+    	strcpy(filenamePPM, strippedFilename);
+    	strcat(filenamePPM, ".ppm");
+
+    	if (verbose)
+			puts("Opening PPM file");
+
+		I = LoadPPM_rgb8matrix(filenamePPM, &nrl, &nrh, &ncl, &nch);
+
+    	if (txColor) {
+
+			if (verbose)
+				puts("Computing color ratios");
+
+			TauxRGB tx = computeTauxRGB(I, nrl, nrh, ncl, nch);
+			ratioR = tx.tauxR;
+			ratioG = tx.tauxG;
+			ratioB = tx.tauxB;
+
+			printf("Color ratios : R[%f] G[%f] B[%f]\n", ratioR, ratioG, ratioB);
+
+		}
+
+		free_rgb8matrix(I, nrl, nrh, ncl, nch);
 
 	}
 
+	// Saving to file
+	if (verbose)
+		puts("Saving descriptors to file");
+
+	saveDescriptorsToFile(filename, colorType, mean, ratioTexture, ratioR, ratioG, ratioB, histogramV);
+
 	free(strippedFilename);
+	free(histogramV);
 
 	return 1;
 

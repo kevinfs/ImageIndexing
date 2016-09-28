@@ -8,6 +8,7 @@ utils/images/*-h.pgm
 utils/images/*-v.pgm
 utils/images/*-n.pgm
 utils/images/*-ns.pgm
+utils/images/*-descriptors.txt
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
