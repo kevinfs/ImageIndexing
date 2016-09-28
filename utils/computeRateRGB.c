@@ -29,19 +29,24 @@ TauxRGB computeTauxRGB(rgb8 **imageRGB, long nrl, long nrh, long ncl, long nch) 
 
 TauxRGB computeRGBLevel(rgb8 **imageRGB, long nrl, long nrh, long ncl, long nch){
 	
-	int x, y, sumR, sumG, sumB;
+	int x, y;
+	double sumR = 0.0, sumG = 0.0, sumB = 0.0;
+	double sum = 0.0;
 	TauxRGB tRGB;
+	int borneInf = 70, borneSup = 90;
 	for (y = nrl; y <= nrh; y++){
 		for (x = ncl; x <= nch; x++){
-			if ((imageRGB[y][x].r > 2 * imageRGB[y][x].g) && (imageRGB[y][x].r > 2 * imageRGB[y][x].b))
+			if ((imageRGB[y][x].r > borneSup) && (borneInf > imageRGB[y][x].g) && (borneInf > imageRGB[y][x].b))
 				sumR++;
-			else if ((imageRGB[y][x].g > 2 * imageRGB[y][x].r) && (imageRGB[y][x].g > 2 * imageRGB[y][x].b))
+			else if ((imageRGB[y][x].g > borneSup) && (borneInf > imageRGB[y][x].r) && (borneInf > imageRGB[y][x].b))
 				sumG++;
-			else if ((imageRGB[y][x].b > 2 * imageRGB[y][x].r) && (imageRGB[y][x].b > 2 * imageRGB[y][x].g))
+			else if ((imageRGB[y][x].b > borneSup) && (borneInf > imageRGB[y][x].r) && (borneInf > imageRGB[y][x].g))
 				sumB++;
+			else
+				sum++;
 		}
 	}
-	int sum = sumR + sumG + sumB;
+	sum += sumR + sumG + sumB;
 	tRGB.tauxR = sumR / sum;
 	tRGB.tauxG = sumG / sum;
 	tRGB.tauxB = sumB / sum;

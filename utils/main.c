@@ -264,7 +264,7 @@ int main(int argc, char * argv[]){
 			if (verbose)
 				puts("Computing color ratios");
 
-			TauxRGB tx = computeTauxRGB(I, nrl, nrh, ncl, nch);
+			TauxRGB tx = computeRGBLevel(I, nrl, nrh, ncl, nch);
 			ratioR = tx.tauxR;
 			ratioG = tx.tauxG;
 			ratioB = tx.tauxB;
