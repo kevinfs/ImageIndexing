@@ -2,6 +2,11 @@ package app;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import oracle.sql.ARRAY;
+import oracle.sql.ArrayDescriptor;
 
 public class OJDBC {
 
@@ -30,61 +35,30 @@ public class OJDBC {
 		}
 	}
 	
-	/*
-	private void createClients(StatisticManager statisticManager, int idEntry) {
-		List<AbstractClient> servedClients = statisticManager.getServedClients();
+	
 
-		for (AbstractClient client : servedClients){
-			addClient(idEntry, client, true);
-		}
-		
-		List<AbstractClient> nonServedClients = statisticManager.getNonServedClients();
-		
-		for (AbstractClient client : nonServedClients){
-			addClient(idEntry, client, false);
-		}
-
-	}
-
-	private void addClient(int idEntry, AbstractClient client, boolean isServed) {
+	public void addImageData(int txR, int txG, int txB, int nbPixels, int color, int[] hist) {
 		try {
-
-			String insertAddressQuery = "INSERT INTO client (arrival_time, service_start_time, departure_time, is_served, priority, entry_id) VALUES (?,?,?,?,?,?)";
-
-			PreparedStatement preparedStatement = connection.prepareStatement(insertAddressQuery);
-
-			preparedStatement.setInt(1, client.getArrivalTime());
-			preparedStatement.setInt(2, client.getServiceStartTime());
-			preparedStatement.setInt(3, client.getDepartureTime());
-			preparedStatement.setBoolean(4, isServed);
-			preparedStatement.setBoolean(5, client.isPriority());
-			preparedStatement.setInt(6, idEntry);
-
+			ArrayDescriptor arrayDescriptor = ArrayDescriptor.createDescriptor("HISTOGRAMM", connection);
+					   
+		    ARRAY array = new ARRAY(arrayDescriptor, connection, hist);
+					   
+     		String insertQuery = "UPDATE MULTIMEDIA SET hist = ?, TXR = " +txR+ ", TXG = "+ txG+ ",TXB = "+txB+ " , NBPIXELS = " +nbPixels+ ", COLOR =" + color + "  WHERE nom = '1.jpg' ";
+		   
+		    
+			PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+			preparedStatement.setArray(1, array);
+			
 			preparedStatement.executeUpdate();
 
 			preparedStatement.close();
+			
 		} catch (SQLException se) {
 			System.err.println(se.getMessage());
 		}
 	}
 	
-	public int servedClientCount(int simulationEntryId) {
-		int count = 0;
-		try {
-			String request = "SELECT count(*) AS count FROM client AS c WHERE c.entry_id = ? AND c.is_served = true";
-			PreparedStatement preparedStatement = connection.prepareStatement(request);
-			preparedStatement.setInt(1, simulationEntryId);
-			ResultSet result = preparedStatement.executeQuery();
-			result.next();
-			count = result.getInt("count");
-			preparedStatement.close();
 
-		} catch (SQLException se) {
-			System.err.println(se.getMessage());
-		}
-		return count;
-	}
 	
-	*/
 
 }
