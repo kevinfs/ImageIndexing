@@ -5,10 +5,13 @@ void saveDescriptorsToFile(char * filename, char * colorType, double gradientMea
     FILE *fp;
     char * strippedFilename;
     char * descriptorsFile;
+    char * fileID;
     int i;
 
     // Find picture name
     strippedFilename = removeExtension(filename, '.', '/');
+    fileID = strrchr(filename, '/') + 1;
+
 
     // Make correct path for descriptors file
     descriptorsFile = (char *) malloc(sizeof(char) * strlen(strippedFilename) + strlen("-descriptors.txt"));
@@ -21,7 +24,7 @@ void saveDescriptorsToFile(char * filename, char * colorType, double gradientMea
         puts("Unable to write to descriptor file, aborting...");
 
     // Write global descriptors
-    fprintf(fp, "%s\n%s\n%f\n%f\n%f\n%f\n%f\n", strippedFilename, colorType, gradientMean, ratioTexture, ratioR, ratioG, ratioB);
+    fprintf(fp, "%s\n%s\n%f\n%f\n%f\n%f\n%f\n", fileID, colorType, gradientMean, ratioTexture, ratioR, ratioG, ratioB);
 
     // Write histogram
     if (histogram != NULL)
