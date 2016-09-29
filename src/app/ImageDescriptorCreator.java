@@ -10,16 +10,13 @@ public class ImageDescriptorCreator {
 
 		final Path basedir = Paths
 				.get(FileSystemUtility.imageProcessingDirectory);
-		final Path stdout = Paths.get("somewheretooutputstdout");
-		final Path stderr = Paths.get("somewheretooutputstderr");
 
 		final ProcessBuilder builder = new ProcessBuilder(
 				FileSystemUtility.imageProcessingExecutable, "-cxhm", "-t",
-				String.valueOf(seuil), FileSystemUtility.imageDir + imageFilename);
+				String.valueOf(seuil), FileSystemUtility.imageDir
+						+ imageFilename);
 
 		builder.directory(basedir.toFile());
-		//builder.redirectOutput(stdout.toFile());
-		//builder.redirectError(stderr.toFile());
 
 		try {
 			final Process process = builder.start();
@@ -27,7 +24,7 @@ public class ImageDescriptorCreator {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
-		
+
 		System.out.println("end");
 
 	}
