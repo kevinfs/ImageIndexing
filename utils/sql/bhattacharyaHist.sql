@@ -74,8 +74,6 @@ IS
         batresult_tab.EXTEND (1);
         indexx := indexx + 1;
         batresult_tab(indexx) := c1result.nom;
-        
-      else DBMS_OUTPUT.PUT_LINE('seuil atteind2');
       end if;
     exit when c1%notfound;
     
