@@ -9,7 +9,7 @@ public class FileSystemUtility {
 
 	static public String basename = System.getProperty("user.dir");
 	static public String imageDir = basename + "/utils/images/";
-	static public String imageProcessingDirectory = basename + "/utils/imageProcessing";
+	static public String imageProcessingDirectory = basename + "/utils/";
 	static public String imageProcessingExecutable = basename + "/utils/imageProcessing";
 
 	public static List<String> getAllImagesNames() {

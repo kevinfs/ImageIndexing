@@ -5,6 +5,7 @@ import java.util.List;
 import app.FileImageDescriptorImporter;
 import app.FileSystemUtility;
 import app.ImageDescriptor;
+import app.ImageDescriptorCreator;
 
 public class FileImportTest {
 
@@ -20,6 +21,8 @@ public class FileImportTest {
 		for (String name : names) {
 			System.out.println(name);
 		}
+
+		ImageDescriptorCreator.createImageDescriptorFile("arbre1.jpg", 30);
 	}
 
 }

@@ -15,17 +15,20 @@ public class ImageDescriptorCreator {
 
 		final ProcessBuilder builder = new ProcessBuilder(
 				FileSystemUtility.imageProcessingExecutable, "-cxhm", "-t",
-				String.valueOf(seuil));
+				String.valueOf(seuil), FileSystemUtility.imageDir + imageFilename);
 
 		builder.directory(basedir.toFile());
-		builder.redirectOutput(stdout.toFile());
-		builder.redirectError(stderr.toFile());
+		//builder.redirectOutput(stdout.toFile());
+		//builder.redirectError(stderr.toFile());
 
 		try {
 			final Process process = builder.start();
+			System.out.println("done");
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
+		
+		System.out.println("end");
 
 	}
 
