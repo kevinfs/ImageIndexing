@@ -153,4 +153,18 @@ public class ImageDescriptor {
 		this.histogram = histogram;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ImageDescriptor [fileName=" + fileName + ", colorType="
+				+ colorType + ", gradientMean=" + gradientMean
+				+ ", ratioTexture=" + ratioTexture + ", ratioR=" + ratioR
+				+ ", ratioG=" + ratioG + ", ratioB=" + ratioB + ", histogram="
+				+ histogram + "]";
+	}
+
 }

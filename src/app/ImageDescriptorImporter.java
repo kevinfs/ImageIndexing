@@ -6,6 +6,7 @@ public abstract class ImageDescriptorImporter {
 
 	abstract ImageDescriptor importImageDescriptors(String imageName);
 
-	abstract List<ImageDescriptor> importImagesDescriptors(List<String> imagesNames);
+	abstract List<ImageDescriptor> importImagesDescriptors(
+			List<String> imagesNames);
 
 }

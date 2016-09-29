@@ -1,5 +1,7 @@
 package app;
 
+import java.util.Arrays;
+
 public class Histogram<T> {
 
 	private int size;
@@ -33,6 +35,17 @@ public class Histogram<T> {
 		@SuppressWarnings("unchecked")
 		final T e = (T) values[position];
 		return e;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Histogram [size=" + size + ", values="
+				+ Arrays.toString(values) + "]";
 	}
 
 }
