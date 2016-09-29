@@ -78,7 +78,6 @@ public class OJDBC {
 		ArrayList<String> al = new ArrayList<String>();
 		
 		try {
-<<<<<<< HEAD
 			
 			String insertQuery = "begin batacharyaHistProc( ?, ?, ?); end; ";
 			OracleCallableStatement preparedStatement =  (OracleCallableStatement)connection.prepareCall(insertQuery);
@@ -86,10 +85,7 @@ public class OJDBC {
 			preparedStatement.registerOutParameter(1, OracleTypes.ARRAY, "BATRESULT");
      		preparedStatement.setString(2, name);
 			preparedStatement.setDouble(3, seuil);	
-=======
->>>>>>> branch 'master' of https://github.com/kevinfs/ImageIndexing.git
 
-<<<<<<< HEAD
 			preparedStatement.execute();
 			ARRAY array_to_pass = preparedStatement.getARRAY(1);
 			Datum[] elements = array_to_pass.getOracleArray();
@@ -100,19 +96,6 @@ public class OJDBC {
 			
 			preparedStatement.close();
 			
-=======
-			String insertQuery = "";
-
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(insertQuery);
-
-			/*
-			 * preparedStatement.executeUpdate();
-			 * 
-			 * preparedStatement.close();
-			 */
-
->>>>>>> branch 'master' of https://github.com/kevinfs/ImageIndexing.git
 		} catch (SQLException se) {
 			System.err.println(se.getMessage());
 		}
