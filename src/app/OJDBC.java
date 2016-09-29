@@ -103,6 +103,36 @@ public class OJDBC {
 		return al;
 	}
 	
+	public ArrayList<String> bhattacharyaTx(String name, double seuil) {
+		
+		ArrayList<String> al = new ArrayList<String>();
+		
+		try {
+			
+			String insertQuery = "begin batacharyaTxProc( ?, ?, ?); end; ";
+			OracleCallableStatement preparedStatement =  (OracleCallableStatement)connection.prepareCall(insertQuery);
+     		
+			preparedStatement.registerOutParameter(1, OracleTypes.ARRAY, "BATRESULT");
+     		preparedStatement.setString(2, name);
+			preparedStatement.setDouble(3, seuil);	
+
+			preparedStatement.execute();
+			ARRAY array_to_pass = preparedStatement.getARRAY(1);
+			Datum[] elements = array_to_pass.getOracleArray();
+			
+			for (int i=0;i<elements.length;i++){
+				al.add(elements[i].stringValue());
+			}
+			
+			preparedStatement.close();
+			
+		} catch (SQLException se) {
+			System.err.println(se.getMessage());
+		}
+		
+		return al;
+	}
+	
 	public ArrayList<String> signature(String name, double color, double texture, double shape, double locationn, double seuil) {
 			
 			ArrayList<String> al = new ArrayList<String>();
