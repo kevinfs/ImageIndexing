@@ -10,17 +10,16 @@ import oracle.sql.ArrayDescriptor;
 
 public class OJDBC {
 
-	
 	private static String host = "localhost";
 	private static String user = "system";
 	private static String password = "oracle";
-	private static String url = "jdbc:oracle:thin:@"+host+":1521:orcl12c";
+	private static String url = "jdbc:oracle:thin:@" + host + ":1521:orcl12c";
 
 	/**
 	 * Lazy singleton instance.
 	 */
 	private Connection connection;
-	
+
 	public OJDBC() {
 		prepareConnection();
 	}
@@ -34,25 +33,27 @@ public class OJDBC {
 			}
 		}
 	}
-	
-	
 
-	public void addImageData(int txR, int txG, int txB, int nbPixels, int color, int[] hist) {
+	public void addImageData(int txR, int txG, int txB, int nbPixels,
+			int color, int[] hist) {
 		try {
-			ArrayDescriptor arrayDescriptor = ArrayDescriptor.createDescriptor("HISTOGRAMM", connection);
-					   
-		    ARRAY array = new ARRAY(arrayDescriptor, connection, hist);
-					   
-     		String insertQuery = "UPDATE MULTIMEDIA SET hist = ?, TXR = " +txR+ ", TXG = "+ txG+ ",TXB = "+txB+ " , NBPIXELS = " +nbPixels+ ", COLOR =" + color + "  WHERE nom = '1.jpg' ";
-		   
-		    
-			PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+			ArrayDescriptor arrayDescriptor = ArrayDescriptor.createDescriptor(
+					"HISTOGRAMM", connection);
+
+			ARRAY array = new ARRAY(arrayDescriptor, connection, hist);
+
+			String insertQuery = "UPDATE MULTIMEDIA SET hist = ?, TXR = " + txR
+					+ ", TXG = " + txG + ",TXB = " + txB + " , NBPIXELS = "
+					+ nbPixels + ", COLOR =" + color + "  WHERE nom = '1.jpg' ";
+
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(insertQuery);
 			preparedStatement.setArray(1, array);
-			
+
 			preparedStatement.executeUpdate();
 
 			preparedStatement.close();
-			
+
 		} catch (SQLException se) {
 			System.err.println(se.getMessage());
 		}
@@ -60,20 +61,21 @@ public class OJDBC {
 
 	public void bhattacharya(String name, int nbTotal, int sizeTab) {
 		try {
-			
-     		String insertQuery = "";
-     		
-			PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-			
-     		
-			/*preparedStatement.executeUpdate();
 
-			preparedStatement.close();*/
-			
+			String insertQuery = "";
+
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(insertQuery);
+
+			/*
+			 * preparedStatement.executeUpdate();
+			 * 
+			 * preparedStatement.close();
+			 */
+
 		} catch (SQLException se) {
 			System.err.println(se.getMessage());
 		}
 	}
-	
 
 }
