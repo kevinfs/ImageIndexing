@@ -32,32 +32,34 @@ public class FileImageDescriptorImporter extends ImageDescriptorImporter {
 					imageDescriptor.setFileName(currentLine);
 					break;
 
+				case 2:
+					imageDescriptor.setColorType(currentLine);
+					break;
+
 				case 3:
-					imageDescriptor.setFileName(currentLine);
+					imageDescriptor.setGradientMean(Double
+							.parseDouble(currentLine));
 					break;
 
 				case 4:
-					imageDescriptor.setFileName(currentLine);
+					imageDescriptor.setRatioTexture(Double
+							.parseDouble(currentLine));
 					break;
 
 				case 5:
-					imageDescriptor.setFileName(currentLine);
+					imageDescriptor.setRatioR(Double.parseDouble(currentLine));
 					break;
 
 				case 6:
-					imageDescriptor.setFileName(currentLine);
+					imageDescriptor.setRatioG(Double.parseDouble(currentLine));
 					break;
 
 				case 7:
-					imageDescriptor.setFileName(currentLine);
+					imageDescriptor.setRatioB(Double.parseDouble(currentLine));
 					break;
 
 				case 8:
-					imageDescriptor.setFileName(currentLine);
-					break;
-
-				case 9:
-					imageDescriptor.setFileName(currentLine);
+					imageDescriptor.setHistogram(extractHistogram(currentLine));
 					break;
 
 				default:
@@ -83,6 +85,21 @@ public class FileImageDescriptorImporter extends ImageDescriptorImporter {
 	@Override
 	List<ImageDescriptor> importImagesDescriptors(List<String> imagesNames) {
 		return null;
+	}
+
+	Histogram<Integer> extractHistogram(String histogramLine) {
+		String valuesS[] = histogramLine.split(" ");
+		Integer values[] = new Integer[valuesS.length];
+
+		int i = 0;
+		for (String string : valuesS) {
+			values[i] = Integer.valueOf(string);
+			i++;
+		}
+
+		Histogram<Integer> histogram = new Histogram<Integer>(values.length,
+				values);
+		return histogram;
 	}
 
 }
