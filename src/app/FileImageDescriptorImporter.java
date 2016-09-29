@@ -9,9 +9,12 @@ import java.util.List;
 public class FileImageDescriptorImporter extends ImageDescriptorImporter {
 
 	@Override
-	public ImageDescriptor importImageDescriptors(String descriptorFilename) {
+	public ImageDescriptor importImageDescriptors(String imageFilename) {
 
 		// Create complete path and Descriptor
+		String imageFilenameRoot = imageFilename.substring(0,
+				imageFilename.lastIndexOf('.'));
+		String descriptorFilename = imageFilenameRoot + "-descriptors.txt";
 		String path = FileSystemUtility.imageDir + descriptorFilename;
 		ImageDescriptor imageDescriptor = new ImageDescriptor();
 

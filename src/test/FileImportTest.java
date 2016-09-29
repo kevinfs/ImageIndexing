@@ -12,8 +12,7 @@ public class FileImportTest {
 	public static void main(String[] args) {
 
 		FileImageDescriptorImporter fidi = new FileImageDescriptorImporter();
-		ImageDescriptor iD = fidi
-				.importImageDescriptors("vache1-descriptors.txt");
+		ImageDescriptor iD = fidi.importImageDescriptors("arbre1.jpg");
 
 		System.out.println(iD.toString());
 
@@ -23,6 +22,8 @@ public class FileImportTest {
 		}
 
 		ImageDescriptorCreator.createImageDescriptorFile("arbre1.jpg", 30);
+
+		ImageDescriptorCreator.createAllImagesDescriptorFile(30);
 	}
 
 }
