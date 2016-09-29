@@ -20,12 +20,9 @@ public class ImageDescriptorCreator {
 
 		try {
 			final Process process = builder.start();
-			System.out.println("done");
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
-
-		System.out.println("end");
 
 	}
 
