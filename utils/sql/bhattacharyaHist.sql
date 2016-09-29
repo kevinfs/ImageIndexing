@@ -80,22 +80,24 @@ IS
     end loop;
     
     return batresult_tab;
-    
+   
 END;
    
 /  
 
-select * from table( batacharyaHistLoop('1.jpg', 0.0005));  
-   
+--select * from table( batacharyaHistLoop(?, ?));  
+
+select * from table( batacharyaHistLoop('1.jpg', 0.0005));
+ --DBMS_OUTPUT.GET_LINE (return_value, get_status);  
 -- begin    
 --  update multimedia set hist = ( select hist from multimedia where nom = '1.jpg') where nom = '10.jpg' ;  
 --  commit;
 -- end; 
   
-CREATE OR REPLACE VIEW batacharya_cross AS
-  SELECT m1.nom as nomimgref, m2.nom as nomimgcomp, batacharyaHist(m1.nom, m2.nom) As batdist
-  FROM MULTIMEDIA m1,  MULTIMEDIA m2
-  Where m1.hist is not NULL and  m2.hist is not NULL;
-/
-
-select DISTINCT * from batacharya_cross where batdist < 0.00005 and NOMIMGREF like '1.jpg';
+--CREATE OR REPLACE VIEW batacharya_cross AS
+--  SELECT m1.nom as nomimgref, m2.nom as nomimgcomp, batacharyaHist(m1.nom, m2.nom) As batdist
+--  FROM MULTIMEDIA m1,  MULTIMEDIA m2
+--  Where m1.hist is not NULL and  m2.hist is not NULL;
+--/
+--
+--select DISTINCT * from batacharya_cross where batdist < 0.00005 and NOMIMGREF like '1.jpg';
