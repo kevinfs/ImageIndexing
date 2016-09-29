@@ -1,6 +1,9 @@
 package test;
 
+import java.util.List;
+
 import app.FileImageDescriptorImporter;
+import app.FileSystemUtility;
 import app.ImageDescriptor;
 
 public class FileImportTest {
@@ -13,6 +16,10 @@ public class FileImportTest {
 
 		System.out.println(iD.toString());
 
+		List<String> names = FileSystemUtility.getAllImagesNames();
+		for (String name : names) {
+			System.out.println(name);
+		}
 	}
 
 }
