@@ -9,10 +9,10 @@ import java.util.List;
 public class FileImageDescriptorImporter extends ImageDescriptorImporter {
 
 	@Override
-	public ImageDescriptor importImageDescriptors(String imageName) {
+	public ImageDescriptor importImageDescriptors(String descriptorFilename) {
 
 		// Create complete path and Descriptor
-		String path = FileSystemUtility.imageDir + imageName;
+		String path = FileSystemUtility.imageDir + descriptorFilename;
 		ImageDescriptor imageDescriptor = new ImageDescriptor();
 
 		// Does file exists ?
@@ -86,6 +86,8 @@ public class FileImageDescriptorImporter extends ImageDescriptorImporter {
 				}
 			}
 
+		} else {
+			System.err.println("Descriptor file not found");
 		}
 
 		return imageDescriptor;
