@@ -57,56 +57,15 @@ public class OJDBC {
 			System.err.println(se.getMessage());
 		}
 	}
-	
-	public void batacharya(int nbTotal, int sizeTab, int[] tab) {
+
+	public void bhattacharya(String name, int nbTotal, int sizeTab) {
 		try {
 			
-			String valTab = "";
-			for(int i = 0; i < sizeTab-1; i++){
-				valTab += tab[i]+",";
-			}
-			valTab += tab[sizeTab-1];
-			System.out.println(valTab);
-     		String insertQuery = "set serveroutput on; \n"+
-     		"declare \n"+ 
-     		"i ordsys.ordimage; \n"+
-     		"ctx RAW(400) := NULL; \n"+
-     		"ligne multimedia%ROWTYPE; \n"+
-     		"cursor mm is select * from multimedia for update; \n"+
-     		"sig1 ordsys.ordimageSignature; \n"+
-     		"sig2 ordsys.ordimageSignature; \n"+
-     		"sim integer; \n"+
-     		"sumh1 double precision := 0; \n"+
-     		"sumh2 double precision := 0; \n" +
-     		"multsumh1h2 double precision := 0; \n"+
-     		"BC double precision := 0; \n"+
-     		"resultat double precision := 0; \n"+
-     		"s integer := ?; \n"+
-     		"TYPE TABLEAU IS VARRAY(?) OF INTEGER; \n"+
-     		"tab TABLEAU; \n"+
-     		"tab2 TABLEAU; \n"+
-     		"nbTotal integer := ?; \n\n"+
-  
-			"begin \n\n"+
-
-			"tab:= TABLEAU(?); \n"+
-			"tab2:= TABLEAU(?); \n\n"+
-
-			"for it in 1..s loop \n"+
-			"	sumh1 := sumh1 + tab(it)/nbTotal; \n"+
-			"	sumh2 := sumh2 + tab2(it)/nbTotal; \n"+
-			"end loop; \n\n"+
-
-			"multsumh1h2 := sumh1*sumh2; \n\n"+
-
-			"for it in 1..s loop \n"+
-			"	BC := BC + SQRT( (tab(it)/nbTotal * tab2(it)/nbTotal) / multsumh1h2); \n"+
-			"end loop; \n\n"+
-
-     		"resultat := -LN(BC); \n";   		
-System.out.println(insertQuery);
+     		String insertQuery = "";
+     		
 			PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
 			
+     		
 			/*preparedStatement.executeUpdate();
 
 			preparedStatement.close();*/
