@@ -114,6 +114,7 @@ public class InfosPanel extends JPanel {
 
 		oraclePanel = new JPanel(new FlowLayout());
 		resultPanel = new JPanel(new FlowLayout());
+		resultPanel.add(new JLabel("Images similaires :"));
 
 		scroller2 = new JScrollPane(resultPanel);
 		scroller2.getVerticalScrollBar().setUnitIncrement(16);
@@ -169,7 +170,7 @@ public class InfosPanel extends JPanel {
 		final OJDBC dB = new OJDBC();
 		ArrayList<String> similar = dB.bhattacharyaHist(iD.getFileName(),
 				Double.valueOf(batthaText.getText()));
-		resultPanel.add(new JLabel("Images similaires :"));
+
 		for (String filename : similar) {
 
 			PlanarImage pgmImage = JAI.create("fileload",
