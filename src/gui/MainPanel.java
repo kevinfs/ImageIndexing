@@ -94,7 +94,7 @@ public class MainPanel extends JPanel implements ListSelectionListener {
 		listScroller.setMinimumSize(minimumSize);
 
 		// Provide a preferred size for the split pane.
-		splitPane.setPreferredSize(new Dimension(800, 400));
+		splitPane.setPreferredSize(new Dimension(1200, 600));
 
 		// updateLabel(imageNames[queryList.getSelectedIndex()]);
 	}

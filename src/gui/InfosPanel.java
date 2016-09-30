@@ -2,20 +2,29 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.media.jai.JAI;
+import javax.media.jai.PlanarImage;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import app.FileImageDescriptorImporter;
 import app.FileSystemUtility;
 import app.ImageDescriptor;
+import app.OJDBC;
 
 public class InfosPanel extends JPanel {
 
@@ -32,6 +41,16 @@ public class InfosPanel extends JPanel {
 	private static JLabel gLabel;
 	private static JLabel bLabel;
 	private static JLabel picLabel;
+	private static JLabel picLabelNorme;
+	private static JLabel picLabelSeuille;
+	private static JScrollPane scroller;
+	private static JPanel formPanel;
+	private static JPanel batthaPanel;
+	private static JPanel oraclePanel;
+	private static JLabel batthaLabel;
+	private static JTextField batthaText;
+	private static JButton batthaButton;
+	private static ImageDescriptor iD;
 
 	public InfosPanel() {
 		super(new BorderLayout());
@@ -61,6 +80,8 @@ public class InfosPanel extends JPanel {
 		bLabel.setForeground(Color.blue);
 
 		picLabel = new JLabel();
+		picLabelNorme = new JLabel();
+		picLabelSeuille = new JLabel();
 
 		textInfosPanel.add(fileNameLabel);
 		textInfosPanel.add(meanLabel);
@@ -68,15 +89,43 @@ public class InfosPanel extends JPanel {
 		textInfosPanel.add(gLabel);
 		textInfosPanel.add(bLabel);
 		textInfosPanel.add(picLabel);
-		add(textInfosPanel, BorderLayout.CENTER);
+		textInfosPanel.add(picLabelNorme);
+		textInfosPanel.add(picLabelSeuille);
+		scroller = new JScrollPane(textInfosPanel);
+		scroller.getVerticalScrollBar().setUnitIncrement(16);
+
+		batthaLabel = new JLabel("SŽlectionnez le seuil");
+		batthaText = new JTextField("0.0005", 5);
+		batthaButton = new JButton("Distance de Bhattacharya");
+		batthaButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				battha();
+			}
+		});
+
+		batthaPanel = new JPanel(new FlowLayout());
+		batthaPanel.add(batthaLabel);
+		batthaPanel.add(batthaText);
+		batthaPanel.add(batthaButton);
+		batthaPanel.setMaximumSize(new Dimension(200, getHeight()));
+
+		oraclePanel = new JPanel(new FlowLayout());
+
+		formPanel = new JPanel();
+		formPanel.add(batthaPanel, BorderLayout.NORTH);
+		formPanel.add(oraclePanel, BorderLayout.SOUTH);
+		formPanel.setMaximumSize(new Dimension(200, getHeight()));
+
+		add(scroller, BorderLayout.CENTER);
 		add(imageProcessingButton, BorderLayout.NORTH);
+		add(formPanel, BorderLayout.LINE_END);
 
 	}
 
 	public static void updateFile(String filename) {
 
 		FileImageDescriptorImporter fidi = new FileImageDescriptorImporter();
-		ImageDescriptor iD = fidi.importImageDescriptors(filename);
+		iD = fidi.importImageDescriptors(filename);
 
 		fileNameLabel.setText(iD.getFileName());
 		meanLabel.setText(String.valueOf(iD.getGradientMean()));
@@ -86,14 +135,30 @@ public class InfosPanel extends JPanel {
 
 		BufferedImage myPicture;
 		try {
-			System.out.println(FileSystemUtility.imageDir + filename);
 			myPicture = ImageIO.read(new File(FileSystemUtility.imageDir
 					+ filename));
 			picLabel.setIcon(new ImageIcon(myPicture));
+
+			String imageFilenameRoot = filename.substring(0,
+					filename.lastIndexOf('.'));
+
+			PlanarImage pgmImage = JAI.create("fileload",
+					FileSystemUtility.imageDir + imageFilenameRoot + "-n.pgm");
+			picLabelNorme.setIcon(new ImageIcon(pgmImage.getAsBufferedImage()));
+
+			pgmImage = JAI.create("fileload", FileSystemUtility.imageDir
+					+ imageFilenameRoot + "-ns.pgm");
+			picLabelSeuille
+					.setIcon(new ImageIcon(pgmImage.getAsBufferedImage()));
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
 
+	}
+	
+	public static void battha() {
+		final OJDBC dB = new OJDBC();
+		dB.bhattacharyaHist(iD.getFileName(), Double.valueOf(batthaText.getText()));
 	}
 
 }
