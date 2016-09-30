@@ -13,7 +13,7 @@ public class ImageDescriptor {
 	private double ratioR;
 	private double ratioG;
 	private double ratioB;
-	private int pixelNumber;
+	private int edgePixelNumber;
 	private Histogram<Integer> histogram;
 
 	public ImageDescriptor() {
@@ -32,7 +32,7 @@ public class ImageDescriptor {
 		this.ratioR = ratioR;
 		this.ratioG = ratioG;
 		this.ratioB = ratioB;
-		this.pixelNumber = pixelNumber;
+		this.edgePixelNumber = pixelNumber;
 		this.histogram = histogram;
 	}
 
@@ -160,7 +160,7 @@ public class ImageDescriptor {
 	 * @return the pixelNumber
 	 */
 	public int getPixelNumber() {
-		return pixelNumber;
+		return edgePixelNumber;
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class ImageDescriptor {
 	 *            the pixelNumber to set
 	 */
 	public void setPixelNumber(int pixelNumber) {
-		this.pixelNumber = pixelNumber;
+		this.edgePixelNumber = pixelNumber;
 	}
 
 	/*
@@ -182,7 +182,7 @@ public class ImageDescriptor {
 				+ colorType + ", gradientMean=" + gradientMean
 				+ ", ratioTexture=" + ratioTexture + ", ratioR=" + ratioR
 				+ ", ratioG=" + ratioG + ", ratioB=" + ratioB
-				+ ", pixelNumber=" + pixelNumber + ", histogram=" + histogram
+				+ ", pixelNumber=" + edgePixelNumber + ", histogram=" + histogram
 				+ "]";
 	}
 

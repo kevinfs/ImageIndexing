@@ -49,26 +49,31 @@ public class FileImageDescriptorImporter extends ImageDescriptorImporter {
 						break;
 
 					case 4:
+						imageDescriptor.setPixelNumber(Integer
+								.parseInt(currentLine));
+						break;
+
+					case 5:
 						imageDescriptor.setRatioTexture(Double
 								.parseDouble(currentLine));
 						break;
 
-					case 5:
+					case 6:
 						imageDescriptor.setRatioR(Double
 								.parseDouble(currentLine));
 						break;
 
-					case 6:
+					case 7:
 						imageDescriptor.setRatioG(Double
 								.parseDouble(currentLine));
 						break;
 
-					case 7:
+					case 8:
 						imageDescriptor.setRatioB(Double
 								.parseDouble(currentLine));
 						break;
 
-					case 8:
+					case 9:
 						imageDescriptor
 								.setHistogram(extractHistogram(currentLine));
 						break;

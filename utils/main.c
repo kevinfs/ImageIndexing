@@ -94,6 +94,7 @@ int main(int argc, char * argv[]){
 
 	char * colorType = "gray";
 	double gradientMean = 0.0;
+	int numberEdgePixel = 0;
 	double ratioTexture = 0.0;
 	double ratioR = 0.0;
 	double ratioG = 0.0;
@@ -190,6 +191,8 @@ int main(int argc, char * argv[]){
 				free(filenameN);
 			}
 
+			numberEdgePixel = getNumberOfContourPixels(NORME, nrh, nch);
+
 			if (mean) {
 				if (verbose)
     				puts("Finding mean");
@@ -281,7 +284,7 @@ int main(int argc, char * argv[]){
 	if (verbose)
 		puts("Saving descriptors to file");
 
-	saveDescriptorsToFile(filename, colorType, mean, ratioTexture, ratioR, ratioG, ratioB, histogramV);
+	saveDescriptorsToFile(filename, colorType, mean, numberEdgePixel, ratioTexture, ratioR, ratioG, ratioB, histogramV);
 
 	free(strippedFilename);
 	free(histogramV);

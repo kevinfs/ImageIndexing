@@ -1,6 +1,6 @@
 #include "utils.h"
 
-void saveDescriptorsToFile(char * filename, char * colorType, double gradientMean, double ratioTexture, double ratioR, double ratioG, double ratioB, int * histogram) {
+void saveDescriptorsToFile(char * filename, char * colorType, double gradientMean, int numberEdgePixel, double ratioTexture, double ratioR, double ratioG, double ratioB, int * histogram) {
 
     FILE *fp;
     char * strippedFilename;
@@ -24,7 +24,7 @@ void saveDescriptorsToFile(char * filename, char * colorType, double gradientMea
         puts("Unable to write to descriptor file, aborting...");
 
     // Write global descriptors
-    fprintf(fp, "%s\n%s\n%f\n%f\n%f\n%f\n%f\n", fileID, colorType, gradientMean, ratioTexture, ratioR, ratioG, ratioB);
+    fprintf(fp, "%s\n%s\n%f\n%d\n%f\n%f\n%f\n%f\n", fileID, colorType, gradientMean, numberEdgePixel, ratioTexture, ratioR, ratioG, ratioB);
 
     // Write histogram
     if (histogram != NULL)
