@@ -31,4 +31,4 @@ NRC/nrarith.o: NRC/nrarith.c NRC/nrarith.h
 #
 
 clean :
-	rm imageProcessing *.o NRC/*.o images/*-h.pgm images/*-v.pgm images/*-n.pgm images/*-ns.pgm
+	rm imageProcessing *.o NRC/*.o images/*-h.pgm images/*-v.pgm images/*-n.pgm images/*-ns.pgm images/*-descriptors.txt
