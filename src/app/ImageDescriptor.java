@@ -13,6 +13,7 @@ public class ImageDescriptor {
 	private double ratioR;
 	private double ratioG;
 	private double ratioB;
+	private int pixelNumber;
 	private Histogram<Integer> histogram;
 
 	public ImageDescriptor() {
@@ -21,7 +22,8 @@ public class ImageDescriptor {
 
 	public ImageDescriptor(String fileName, String colorType,
 			double gradientMean, double ratioTexture, double ratioR,
-			double ratioG, double ratioB, Histogram<Integer> histogram) {
+			double ratioG, double ratioB, int pixelNumber,
+			Histogram<Integer> histogram) {
 		super();
 		this.fileName = fileName;
 		this.colorType = colorType;
@@ -30,6 +32,7 @@ public class ImageDescriptor {
 		this.ratioR = ratioR;
 		this.ratioG = ratioG;
 		this.ratioB = ratioB;
+		this.pixelNumber = pixelNumber;
 		this.histogram = histogram;
 	}
 
@@ -153,6 +156,21 @@ public class ImageDescriptor {
 		this.histogram = histogram;
 	}
 
+	/**
+	 * @return the pixelNumber
+	 */
+	public int getPixelNumber() {
+		return pixelNumber;
+	}
+
+	/**
+	 * @param pixelNumber
+	 *            the pixelNumber to set
+	 */
+	public void setPixelNumber(int pixelNumber) {
+		this.pixelNumber = pixelNumber;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -163,8 +181,9 @@ public class ImageDescriptor {
 		return "ImageDescriptor [fileName=" + fileName + ", colorType="
 				+ colorType + ", gradientMean=" + gradientMean
 				+ ", ratioTexture=" + ratioTexture + ", ratioR=" + ratioR
-				+ ", ratioG=" + ratioG + ", ratioB=" + ratioB + ", histogram="
-				+ histogram + "]";
+				+ ", ratioG=" + ratioG + ", ratioB=" + ratioB
+				+ ", pixelNumber=" + pixelNumber + ", histogram=" + histogram
+				+ "]";
 	}
 
 }

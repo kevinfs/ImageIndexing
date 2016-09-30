@@ -2,6 +2,7 @@ package test;
 
 import java.util.List;
 
+import app.DBExporter;
 import app.FileImageDescriptorImporter;
 import app.FileSystemUtility;
 import app.ImageDescriptor;
@@ -24,6 +25,8 @@ public class FileImportTest {
 		ImageDescriptorCreator.createImageDescriptorFile("arbre1.jpg", 30);
 
 		ImageDescriptorCreator.createAllImagesDescriptorFile(30);
+
+		DBExporter.exportAllImages();
 	}
 
 }

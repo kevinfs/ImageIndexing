@@ -34,8 +34,8 @@ public class OJDBC {
 		}
 	}
 
-	public void addImageData(int txR, int txG, int txB, int nbPixels,
-			int color, int[] hist) {
+	public void addImageData(String filename, double txR, double txG,
+			double txB, int nbPixels, int color, Integer[] hist) {
 		try {
 			ArrayDescriptor arrayDescriptor = ArrayDescriptor.createDescriptor(
 					"HISTOGRAMM", connection);
@@ -44,7 +44,8 @@ public class OJDBC {
 
 			String insertQuery = "UPDATE MULTIMEDIA SET hist = ?, TXR = " + txR
 					+ ", TXG = " + txG + ",TXB = " + txB + " , NBPIXELS = "
-					+ nbPixels + ", COLOR =" + color + "  WHERE nom = '1.jpg' ";
+					+ nbPixels + ", COLOR =" + color + "  WHERE nom = '"
+					+ filename + "' ";
 
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(insertQuery);

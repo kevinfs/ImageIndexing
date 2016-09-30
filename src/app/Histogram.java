@@ -36,6 +36,12 @@ public class Histogram<T> {
 		final T e = (T) values[position];
 		return e;
 	}
+	
+	public T[] getAll() {
+		@SuppressWarnings("unchecked")
+		final T[] e = (T[]) values;
+		return e;
+	}
 
 	/*
 	 * (non-Javadoc)
