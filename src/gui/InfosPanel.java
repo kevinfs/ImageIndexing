@@ -234,6 +234,8 @@ public class InfosPanel extends JPanel {
 				Double.valueOf(oracleLocationText.getText()),
 				Double.valueOf(oracleSeuilText.getText()));
 
+		resultPanel.removeAll();
+
 		for (String filename : similar) {
 
 			BufferedImage myPicture;
@@ -246,6 +248,8 @@ public class InfosPanel extends JPanel {
 				System.err.println(e.getMessage());
 			}
 		}
+
+		resultPanel.updateUI();
 
 	}
 
