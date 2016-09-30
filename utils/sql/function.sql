@@ -220,7 +220,7 @@ END;
 
 CREATE OR REPLACE TYPE SIGRESULT IS TABLE OF VARCHAR2(30) ;
 /
-CREATE OR REPLACE procedure SigLoop(  batresult_tab OUT SIGRESULT, nameInput IN varchar2, color IN integer, texture IN integer, shape IN integer, locationn IN integer, seuil IN integer) 
+CREATE OR REPLACE procedure SigLoop(  sigresult_tab OUT SIGRESULT, nameInput IN varchar2, color IN integer, texture IN integer, shape IN integer, locationn IN integer, seuil IN integer) 
 IS
 
   c1result MULTIMEDIA%ROWTYPE;
@@ -237,6 +237,8 @@ IS
      
   BEGIN
   
+    sigresult_tab := SIGRESULT();
+    
     select signature into sig from multimedia where nom = nameInput; 
     open c1;
     
@@ -246,9 +248,9 @@ IS
        exit when c1%notfound;
         sim := ordsys.ordimageSignature.isSimilar(sig, c1result.signature, 'color =  ' || color || ', texture =' || texture || ', shape = ' || shape || ', location = ' || locationn, seuil);
         if sim = 1 then
-          batresult_tab.EXTEND (1);
+          sigresult_tab.EXTEND (1);
           indexx := indexx + 1;
-          batresult_tab(indexx) := c1result.nom;
+          sigresult_tab(indexx) := c1result.nom;
           
         end if;
      
@@ -258,14 +260,13 @@ IS
 END;
 /
 
-CREATE OR REPLACE Function NBPIXELSLoop( nameInput IN varchar2, seuil IN integer) RETURN SIGRESULT
+CREATE OR REPLACE procedure NBPIXELSLoop( sigresult_tab OUT SIGRESULT, nameInput IN varchar2, seuil IN integer) 
 IS
 
   c1result MULTIMEDIA%ROWTYPE;
   sim integer;
   nbPixels integer;
   indexx integer := 0;
-  batresult_tab SIGRESULT := SIGRESULT(); 
   
   CURSOR c1
     IS
@@ -275,7 +276,7 @@ IS
      
      
   BEGIN
-  
+    sigresult_tab := SIGRESULT();
     select NBPIXELS into nbPixels from multimedia where nom = nameInput; 
     open c1;
     
@@ -284,15 +285,13 @@ IS
       fetch c1 into c1result;
       exit when c1%notfound; 
         if abs(nbPixels-c1result.NBPIXELS) < seuil then   
-          batresult_tab.EXTEND (1);
+          sigresult_tab.EXTEND (1);
           indexx := indexx + 1;
-          batresult_tab(indexx) := c1result.nom;  
+          sigresult_tab(indexx) := c1result.nom;  
         end if;
       
     
     end loop;
-    
-    return batresult_tab;
 
 END;
 /
