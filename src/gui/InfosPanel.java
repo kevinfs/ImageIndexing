@@ -98,7 +98,7 @@ public class InfosPanel extends JPanel {
 		scroller.getVerticalScrollBar().setUnitIncrement(16);
 
 		batthaLabel = new JLabel("S�lectionnez le seuil");
-		batthaText = new JTextField("0.0005", 5);
+		batthaText = new JTextField("0.05", 5);
 		batthaButton = new JButton("Distance de Bhattacharya");
 		batthaButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -169,6 +169,7 @@ public class InfosPanel extends JPanel {
 		final OJDBC dB = new OJDBC();
 		ArrayList<String> similar = dB.bhattacharyaHist(iD.getFileName(),
 				Double.valueOf(batthaText.getText()));
+		resultPanel.add(new JLabel("Images similaires :"));
 		for (String filename : similar) {
 
 			PlanarImage pgmImage = JAI.create("fileload",
