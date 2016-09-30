@@ -1,25 +1,26 @@
 set serveroutput on;
 
 
-CREATE OR REPLACE TYPE HISTOGRAMM IS VARRAY(256) OF INTEGER;
+--CREATE OR REPLACE TYPE HISTOGRAMM IS VARRAY(256) OF INTEGER;
+
 --drop table multimedia;
 
 --creation de la table d'images
---create table multimedia(
---  nom varchar2(50),
---  image ordsys.ordimage,
---  signature ordsys.ordimageSignature,
---  hist HISTOGRAMM,
---  txR integer,
---  txG integer,
---  txB integer,
---  nbPixels integer,
---  color integer
---);
+create table multimedia(
+  nom varchar2(50),
+  image ordsys.ordimage,
+  signature ordsys.ordimageSignature,
+  hist HISTOGRAMM,
+  txR double precision,
+  txG double precision,
+  txB double precision,
+  nbPixels integer,
+  color varchar2(20)
+);
 
 declare 
   i ordsys.ordimage;
-  ctx RAW(400) := NULL;
+  ctx RAW(510) := NULL;
   ligne multimedia%ROWTYPE;
   cursor mm is select * from multimedia for update;
   sig1 ordsys.ordimageSignature;
@@ -27,8 +28,9 @@ declare
   sim integer;
 
 --chargement des images
+begin
 
-for indeximage in  1..10 loop
+for indeximage in  1..500 loop
 
   insert into multimedia(nom, image, signature) values (CONCAT (to_char(indeximage) ,'.jpg'), ordsys.ordimage.init(), ordsys.ordimageSignature.init());
   
