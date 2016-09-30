@@ -40,7 +40,7 @@ public class MainPanel extends JPanel implements ListSelectionListener {
 	private DefaultListModel<String> imgListModel = new DefaultListModel<String>();
 	private JScrollPane listScroller;
 	private JScrollPane listScrollPane;
-	private JPanel infosPanel;
+	private InfosPanel infosPanel;
 
 	public void listUpdate() {
 		queryListModel.clear();
@@ -151,6 +151,12 @@ public class MainPanel extends JPanel implements ListSelectionListener {
 					Object o = theList.getModel().getElementAt(index);
 					System.out.println("Double-clicked on: " + o.toString());
 				}
+			}
+			int index = theList.locationToIndex(mouseEvent.getPoint());
+			if (index >= 0) {
+				Object o = theList.getModel().getElementAt(index);
+				System.out.println("Single-clicked on: " + o.toString());
+				infosPanel.updateFile(o.toString());
 			}
 		}
 	};
