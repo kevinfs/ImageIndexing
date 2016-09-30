@@ -227,6 +227,8 @@ public class InfosPanel extends JPanel {
 		}
 
 		resultPanel.updateUI();
+		scroller2.updateUI();
+		formPanel.updateUI();
 
 	}
 
@@ -255,6 +257,8 @@ public class InfosPanel extends JPanel {
 		}
 
 		resultPanel.updateUI();
+		scroller2.updateUI();
+		formPanel.updateUI();
 
 	}
 
