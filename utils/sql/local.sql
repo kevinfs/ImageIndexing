@@ -5,17 +5,17 @@ CREATE OR REPLACE TYPE HISTOGRAMM IS VARRAY(256) OF INTEGER;
 --drop table multimedia;
 
 --creation de la table d'images
-create table multimedia(
-  nom varchar2(50),
-  image ordsys.ordimage,
-  signature ordsys.ordimageSignature,
-  hist HISTOGRAMM,
-  txR integer,
-  txG integer,
-  txB integer,
-  nbPixels integer,
-  color integer
-);
+--create table multimedia(
+--  nom varchar2(50),
+--  image ordsys.ordimage,
+--  signature ordsys.ordimageSignature,
+--  hist HISTOGRAMM,
+--  txR integer,
+--  txG integer,
+--  txB integer,
+--  nbPixels integer,
+--  color integer
+--);
 
 declare 
   i ordsys.ordimage;
@@ -44,7 +44,5 @@ for ligne in mm loop
   update multimedia set signature = ligne.signature where current of mm;
 end loop;
 commit;
---
----- on peut generer un index sur les signatures d'images
-----create index imgindex on multimedia(signature) indextype is ordsys.ordimageindex;
+
 end;
