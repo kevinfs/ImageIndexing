@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -151,7 +152,7 @@ public class InfosPanel extends JPanel {
 		oraclePanel.add(oracleSeuilText);
 		oraclePanel.add(oracleButton);
 
-		resultPanel = new JPanel(new FlowLayout());
+		resultPanel = new JPanel(new GridLayout(0, 4));
 		resultPanel.add(new JLabel("Images similaires :"));
 
 		scroller2 = new JScrollPane(resultPanel);
@@ -210,6 +211,8 @@ public class InfosPanel extends JPanel {
 		ArrayList<String> similar = dB.bhattacharyaHist(iD.getFileName(),
 				Double.valueOf(batthaText.getText()));
 
+		resultPanel.removeAll();
+
 		for (String filename : similar) {
 
 			BufferedImage myPicture;
@@ -222,6 +225,8 @@ public class InfosPanel extends JPanel {
 				System.err.println(e.getMessage());
 			}
 		}
+
+		resultPanel.updateUI();
 
 	}
 
