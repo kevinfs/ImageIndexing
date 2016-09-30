@@ -1,0 +1,93 @@
+\documentclass[a4paper,12pt]{report}
+
+\usepackage{fullpage}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{mathtools}
+%\usepackage{draftwatermark}
+%\SetWatermarkScale{6}
+
+\usepackage[section]{placeins}
+\usepackage{float} 
+
+%neural networks
+\usepackage{tikz}
+\def\layersep{2.5cm}
+
+\renewcommand{\baselinestretch}{1.3}
+%\renewcommand{\contentsname}{Sommaire}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+
+\author{Kevin Furet-Stricher}
+\title{Atelier Indexation d'Images}
+
+
+
+\begin{document}
+
+
+%\maketitle
+\begin{titlepage}
+	\begin{center}
+
+	~\\[1.5cm]
+
+	\includegraphics[width=0.4\textwidth]{./logo}~\\[1cm]
+	\textsc{\Large Université de Cergy-Pontoise}\\[1.5cm]
+
+	\textsc{\large Atelier}\\[0.5cm]
+
+	% Title
+	\HRule \\[0.4cm]
+	{ \LARGE \bfseries Indexation d'Images \\[0.4cm] }
+
+	\HRule \\[1.5cm]
+
+	% Author and supervisor
+	\begin{minipage}{0.4\textwidth}
+	\begin{flushleft} 
+	\emph{Rédigé par :}\\
+	Lise \textsc{Aubin}\\
+	Kevin \textsc{Furet Stricher}
+	\end{flushleft}
+	\end{minipage}
+	\begin{minipage}{0.4\textwidth}
+	\begin{flushright} 
+	\emph{Encadré par :} \\
+	Dan \textsc{Vodislav}\\
+	Ghilès \textsc{Mostafaoui}\\
+	\end{flushright}
+	\end{minipage}
+	
+	\vfill
+	
+	% Bottom of the page
+	{\large septembre 2016}
+	
+	\end{center}
+\end{titlepage}
+
+\tableofcontents
+
+\input{import-introduction.tex}
+
+\chapter{Présentation globale}
+
+	\input{import-architecture.tex}
+	
+	\input{import-fonctionnalites.tex}
+	
+\chapter{Analyse détaillée}
+
+	\input{import-traitement-images.tex}
+	
+	\input{import-bdd.tex}
+	
+\input{import-conclusion.tex}
+
+\end{document}
