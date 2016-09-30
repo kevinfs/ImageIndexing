@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.media.jai.JAI;
@@ -44,9 +45,11 @@ public class InfosPanel extends JPanel {
 	private static JLabel picLabelNorme;
 	private static JLabel picLabelSeuille;
 	private static JScrollPane scroller;
+	private static JScrollPane scroller2;
 	private static JPanel formPanel;
 	private static JPanel batthaPanel;
 	private static JPanel oraclePanel;
+	private static JPanel resultPanel;
 	private static JLabel batthaLabel;
 	private static JTextField batthaText;
 	private static JButton batthaButton;
@@ -110,10 +113,15 @@ public class InfosPanel extends JPanel {
 		batthaPanel.setMaximumSize(new Dimension(200, getHeight()));
 
 		oraclePanel = new JPanel(new FlowLayout());
+		resultPanel = new JPanel(new FlowLayout());
+
+		scroller2 = new JScrollPane(resultPanel);
+		scroller2.getVerticalScrollBar().setUnitIncrement(16);
 
 		formPanel = new JPanel();
 		formPanel.add(batthaPanel, BorderLayout.NORTH);
-		formPanel.add(oraclePanel, BorderLayout.SOUTH);
+		formPanel.add(oraclePanel, BorderLayout.CENTER);
+		formPanel.add(scroller2, BorderLayout.SOUTH);
 		formPanel.setMaximumSize(new Dimension(200, getHeight()));
 
 		add(scroller, BorderLayout.CENTER);
@@ -155,10 +163,19 @@ public class InfosPanel extends JPanel {
 		}
 
 	}
-	
+
 	public static void battha() {
 		final OJDBC dB = new OJDBC();
-		dB.bhattacharyaHist(iD.getFileName(), Double.valueOf(batthaText.getText()));
+		ArrayList<String> similar = dB.bhattacharyaHist(iD.getFileName(),
+				Double.valueOf(batthaText.getText()));
+		for (String filename : similar) {
+
+			PlanarImage pgmImage = JAI.create("fileload",
+					FileSystemUtility.imageDir + filename);
+			JLabel img = new JLabel(
+					new ImageIcon(pgmImage.getAsBufferedImage()));
+			resultPanel.add(img);
+		}
 	}
 
 }
