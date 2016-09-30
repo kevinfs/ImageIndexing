@@ -16,7 +16,7 @@ public class DBExporter {
 					iD.getRatioB(), iD.getPixelNumber(), 1, iD.getHistogram()
 							.getAll());
 		} catch (NullPointerException e) {
-			System.err.println(e.getMessage() + "for file " + imageFilename);
+			System.err.println(e.getMessage() + " for file " + imageFilename);
 		}
 
 	}
