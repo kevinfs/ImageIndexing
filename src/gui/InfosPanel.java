@@ -53,6 +53,15 @@ public class InfosPanel extends JPanel {
 	private static JLabel batthaLabel;
 	private static JTextField batthaText;
 	private static JButton batthaButton;
+	private static JLabel oracleTexture;
+	private static JLabel oracleShape;
+	private static JLabel oracleLocation;
+	private static JLabel oracleSeuil;
+	private static JTextField oracleTextureText;
+	private static JTextField oracleShapeText;
+	private static JTextField oracleLocationText;
+	private static JTextField oracleSeuilText;
+	private static JButton oracleButton;
 	private static ImageDescriptor iD;
 
 	public InfosPanel() {
@@ -69,6 +78,9 @@ public class InfosPanel extends JPanel {
 
 		meanLabel = new JLabel();
 		meanLabel.setText("mean");
+
+		textureLabel = new JLabel();
+		textureLabel.setText("mean");
 
 		rLabel = new JLabel();
 		rLabel.setText("red");
@@ -88,6 +100,7 @@ public class InfosPanel extends JPanel {
 
 		textInfosPanel.add(fileNameLabel);
 		textInfosPanel.add(meanLabel);
+		textInfosPanel.add(textureLabel);
 		textInfosPanel.add(rLabel);
 		textInfosPanel.add(gLabel);
 		textInfosPanel.add(bLabel);
@@ -97,7 +110,7 @@ public class InfosPanel extends JPanel {
 		scroller = new JScrollPane(textInfosPanel);
 		scroller.getVerticalScrollBar().setUnitIncrement(16);
 
-		batthaLabel = new JLabel("S�lectionnez le seuil");
+		batthaLabel = new JLabel("Selectionnez le seuil");
 		batthaText = new JTextField("0.05", 5);
 		batthaButton = new JButton("Distance de Bhattacharya");
 		batthaButton.addActionListener(new ActionListener() {
@@ -112,7 +125,32 @@ public class InfosPanel extends JPanel {
 		batthaPanel.add(batthaButton);
 		batthaPanel.setMaximumSize(new Dimension(200, getHeight()));
 
+		oracleTexture = new JLabel("Texture");
+		oracleTextureText = new JTextField("0", 5);
+		oracleShape = new JLabel("Shape");
+		oracleShapeText = new JTextField("0", 5);
+		oracleLocation = new JLabel("Location");
+		oracleLocationText = new JTextField("0", 5);
+		oracleSeuil = new JLabel("Seuil");
+		oracleSeuilText = new JTextField("10", 5);
+		oracleButton = new JButton("Signature Oracle");
+		oracleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				oracle();
+			}
+		});
+
 		oraclePanel = new JPanel(new FlowLayout());
+		oraclePanel.add(oracleTexture);
+		oraclePanel.add(oracleTextureText);
+		oraclePanel.add(oracleShape);
+		oraclePanel.add(oracleShapeText);
+		oraclePanel.add(oracleLocation);
+		oraclePanel.add(oracleLocationText);
+		oraclePanel.add(oracleSeuil);
+		oraclePanel.add(oracleSeuilText);
+		oraclePanel.add(oracleButton);
+
 		resultPanel = new JPanel(new FlowLayout());
 		resultPanel.add(new JLabel("Images similaires :"));
 
@@ -138,6 +176,7 @@ public class InfosPanel extends JPanel {
 
 		fileNameLabel.setText(iD.getFileName());
 		meanLabel.setText(String.valueOf(iD.getGradientMean()));
+		textureLabel.setText(String.valueOf(iD.getRatioTexture()));
 		rLabel.setText(String.valueOf(iD.getRatioR()));
 		gLabel.setText(String.valueOf(iD.getRatioG()));
 		bLabel.setText(String.valueOf(iD.getRatioB()));
@@ -170,6 +209,30 @@ public class InfosPanel extends JPanel {
 		final OJDBC dB = new OJDBC();
 		ArrayList<String> similar = dB.bhattacharyaHist(iD.getFileName(),
 				Double.valueOf(batthaText.getText()));
+
+		for (String filename : similar) {
+
+			BufferedImage myPicture;
+			try {
+				myPicture = ImageIO.read(new File(FileSystemUtility.imageDir
+						+ filename));
+				JLabel img = new JLabel(new ImageIcon(myPicture));
+				resultPanel.add(img);
+			} catch (IOException e) {
+				// System.err.println(e.getMessage());
+			}
+		}
+
+	}
+
+	public static void oracle() {
+
+		final OJDBC dB = new OJDBC();
+		ArrayList<String> similar = dB.signature(iD.getFileName(), 1,
+				Double.valueOf(oracleTextureText.getText()),
+				Double.valueOf(oracleShapeText.getText()),
+				Double.valueOf(oracleLocationText.getText()),
+				Double.valueOf(oracleSeuilText.getText()));
 
 		for (String filename : similar) {
 
