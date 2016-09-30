@@ -119,7 +119,7 @@ public class InfosPanel extends JPanel {
 		scroller2 = new JScrollPane(resultPanel);
 		scroller2.getVerticalScrollBar().setUnitIncrement(16);
 
-		formPanel = new JPanel();
+		formPanel = new JPanel(new BorderLayout());
 		formPanel.add(batthaPanel, BorderLayout.NORTH);
 		formPanel.add(oraclePanel, BorderLayout.CENTER);
 		formPanel.add(scroller2, BorderLayout.SOUTH);
@@ -173,11 +173,15 @@ public class InfosPanel extends JPanel {
 
 		for (String filename : similar) {
 
-			PlanarImage pgmImage = JAI.create("fileload",
-					FileSystemUtility.imageDir + filename);
-			JLabel img = new JLabel(
-					new ImageIcon(pgmImage.getAsBufferedImage()));
-			resultPanel.add(img);
+			BufferedImage myPicture;
+			try {
+				myPicture = ImageIO.read(new File(FileSystemUtility.imageDir
+						+ filename));
+				JLabel img = new JLabel(new ImageIcon(myPicture));
+				resultPanel.add(img);
+			} catch (IOException e) {
+				// System.err.println(e.getMessage());
+			}
 		}
 
 	}
