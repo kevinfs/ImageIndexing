@@ -219,7 +219,7 @@ public class InfosPanel extends JPanel {
 				JLabel img = new JLabel(new ImageIcon(myPicture));
 				resultPanel.add(img);
 			} catch (IOException e) {
-				// System.err.println(e.getMessage());
+				System.err.println(e.getMessage());
 			}
 		}
 
@@ -243,7 +243,7 @@ public class InfosPanel extends JPanel {
 				JLabel img = new JLabel(new ImageIcon(myPicture));
 				resultPanel.add(img);
 			} catch (IOException e) {
-				// System.err.println(e.getMessage());
+				System.err.println(e.getMessage());
 			}
 		}
 
