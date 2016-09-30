@@ -39,6 +39,10 @@ public class InfosPanel extends JPanel {
 	private static JLabel fileNameLabel;
 	private static JLabel meanLabel;
 	private static JLabel textureLabel;
+	private static JLabel pixelNumberLabel;
+	private static JLabel textureLabelCaption;
+	private static JLabel meanLabelCaption;
+	private static JLabel pixelNumberLabelCaption;
 	private static JLabel rLabel;
 	private static JLabel gLabel;
 	private static JLabel bLabel;
@@ -76,14 +80,17 @@ public class InfosPanel extends JPanel {
 
 		imageProcessingButton = new JButton();
 
-		fileNameLabel = new JLabel();
-		fileNameLabel.setText("file");
+		fileNameLabel = new JLabel("file");
 
-		meanLabel = new JLabel();
-		meanLabel.setText("mean");
+		meanLabel = new JLabel("mean");
 
-		textureLabel = new JLabel();
-		textureLabel.setText("mean");
+		textureLabel = new JLabel("texture");
+
+		pixelNumberLabel = new JLabel("pixels");
+
+		meanLabelCaption = new JLabel("Moyenne gradient : ");
+		textureLabelCaption = new JLabel("Texture : ");
+		pixelNumberLabelCaption = new JLabel("Pixels de contour : ");
 
 		rLabel = new JLabel();
 		rLabel.setText("red");
@@ -102,8 +109,12 @@ public class InfosPanel extends JPanel {
 		picLabelSeuille = new JLabel();
 
 		textInfosPanel.add(fileNameLabel);
+		textInfosPanel.add(meanLabelCaption);
 		textInfosPanel.add(meanLabel);
+		textInfosPanel.add(textureLabelCaption);
 		textInfosPanel.add(textureLabel);
+		textInfosPanel.add(pixelNumberLabelCaption);
+		textInfosPanel.add(pixelNumberLabel);
 		textInfosPanel.add(rLabel);
 		textInfosPanel.add(gLabel);
 		textInfosPanel.add(bLabel);
@@ -186,6 +197,7 @@ public class InfosPanel extends JPanel {
 		fileNameLabel.setText(iD.getFileName());
 		meanLabel.setText(String.valueOf(iD.getGradientMean()));
 		textureLabel.setText(String.valueOf(iD.getRatioTexture()));
+		pixelNumberLabel.setText(String.valueOf(iD.getPixelNumber()));
 		rLabel.setText(String.valueOf(iD.getRatioR()));
 		gLabel.setText(String.valueOf(iD.getRatioG()));
 		bLabel.setText(String.valueOf(iD.getRatioB()));
