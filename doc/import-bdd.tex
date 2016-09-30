@@ -7,7 +7,7 @@ Les critères de ressemblance que nous avons choisis pour trouver les images sim
 \item L'histogramme des niveaux de gris
 \end{enumerate} 
 
-Pour la couleur, nous nous servons des taux de rouge, de bleu et de vert des images stockées dans la base. Afin de trouvé les images similaires à une image de référence, nous cherchons les images ayant des taux les plus proches de celle-ci.
+Pour la couleur, nous nous servons des taux de rouge, de bleu et de vert des images stockées dans la base. Afin de trouver les images similaires à une image de référence, nous cherchons les images ayant des taux les plus proches de celle-ci.
 
 Pour la forme, nous utilisons le nombre de pixels de contour. De même que pour la couleur, nous cherchons les images ayant un nombre de pixels de contour proche de l'image de référence.
 
@@ -20,7 +20,7 @@ $d = \sum\limits_{i=0}^n\sqrt{\frac{p(x)q(x)}{\sum\limits_{i=0}^n p(x)\sum\limit
 
 Pour les requêtes avec Oracle nous avons utilisé les signatures et la méthode isSimilar() qui peut être paramétrisée pour trouver les images ayant la même couleur, la même forme etc.
 
-Les résultats que nous avons obtenus ce trouve ci-dessous.
+Les résultats que nous avons obtenu se trouve ci-dessous.
 
 \begin{center}
 \includegraphics[scale=0.55]{resultatColor.eps}
@@ -40,10 +40,10 @@ Les résultats que nous avons obtenus ce trouve ci-dessous.
 \captionof{figure}{Résultat avec l'histogramme comme critère de ressemblance}
 \end{center}
 
-Avec le critère de couleur, la méthode d'Oracle obtient en moyenne des résultats plus précis. En effet, les teintes dans les images résultat sont plus proches que celle que nous trouvons avec notre méthode. Nous en déduisons que pour obtenir un résultat plus précis il faudrait utiliser d'autres critères que simplement les taux de couleur. De plus, notre méthode pour calculer les taux utilise des seuils nous permettant de décidé à quelle couleur appartient le pixel (rouge, bleu, vert, gris) ce qui ne permet de pas de souplesse et demande une paramétrisation du seuil fine.
+Avec le critère de couleur, la méthode d'Oracle obtient en moyenne des résultats plus précis. En effet, les teintes dans les images résultats sont plus proches que celle que nous trouvons avec notre méthode. Nous en déduisons que pour obtenir un résultat plus précis il faudrait utiliser d'autres critères que simplement les taux de couleur. De plus, notre méthode pour calculer les taux utilise des seuils nous permettant de décidé à quelle couleur appartient le pixel (rouge, bleu, vert, gris) ce qui ne permet de pas de souplesse et demande une paramétrisation du seuil fine.
 Avec critère basé sur le nombre de pixels de contour, nous trouvons des résultats très proches de ceux donnés par Oracle.
 
-Pour ce qui est du critère sur l'histogramme, nous n'avons pas de comparatif avec Oracle et il est difficil de déterminer visuelement la pertinence de nos résultats.
+Pour ce qui est du critère sur l'histogramme, nous n'avons pas de comparatif avec Oracle et il est difficile de déterminer visuelement la pertinence de nos résultats.
 
 
 Nous avons comparé les temps d'execution entre les requêtes utilisant les méthodes Oracle et nos méthodes.
