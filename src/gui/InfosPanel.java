@@ -54,10 +54,12 @@ public class InfosPanel extends JPanel {
 	private static JLabel batthaLabel;
 	private static JTextField batthaText;
 	private static JButton batthaButton;
+	private static JLabel oracleColor;
 	private static JLabel oracleTexture;
 	private static JLabel oracleShape;
 	private static JLabel oracleLocation;
 	private static JLabel oracleSeuil;
+	private static JTextField oracleColorText;
 	private static JTextField oracleTextureText;
 	private static JTextField oracleShapeText;
 	private static JTextField oracleLocationText;
@@ -126,14 +128,16 @@ public class InfosPanel extends JPanel {
 		batthaPanel.add(batthaButton);
 		batthaPanel.setMaximumSize(new Dimension(200, getHeight()));
 
+		oracleColor = new JLabel("Color");
+		oracleColorText = new JTextField("0.5", 3);
 		oracleTexture = new JLabel("Texture");
-		oracleTextureText = new JTextField("0", 5);
+		oracleTextureText = new JTextField("0", 3);
 		oracleShape = new JLabel("Shape");
-		oracleShapeText = new JTextField("0", 5);
+		oracleShapeText = new JTextField("0", 3);
 		oracleLocation = new JLabel("Location");
-		oracleLocationText = new JTextField("0", 5);
+		oracleLocationText = new JTextField("0", 3);
 		oracleSeuil = new JLabel("Seuil");
-		oracleSeuilText = new JTextField("10", 5);
+		oracleSeuilText = new JTextField("10", 3);
 		oracleButton = new JButton("Signature Oracle");
 		oracleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -171,6 +175,8 @@ public class InfosPanel extends JPanel {
 	}
 
 	public static void updateFile(String filename) {
+
+		resultPanel.removeAll();
 
 		FileImageDescriptorImporter fidi = new FileImageDescriptorImporter();
 		iD = fidi.importImageDescriptors(filename);
@@ -235,7 +241,8 @@ public class InfosPanel extends JPanel {
 	public static void oracle() {
 
 		final OJDBC dB = new OJDBC();
-		ArrayList<String> similar = dB.signature(iD.getFileName(), 1,
+		ArrayList<String> similar = dB.signature(iD.getFileName(),
+				Double.valueOf(oracleColorText.getText()),
 				Double.valueOf(oracleTextureText.getText()),
 				Double.valueOf(oracleShapeText.getText()),
 				Double.valueOf(oracleLocationText.getText()),
