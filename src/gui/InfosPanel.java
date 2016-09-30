@@ -94,7 +94,7 @@ public class InfosPanel extends JPanel {
 		scroller = new JScrollPane(textInfosPanel);
 		scroller.getVerticalScrollBar().setUnitIncrement(16);
 
-		batthaLabel = new JLabel("SŽlectionnez le seuil");
+		batthaLabel = new JLabel("Sï¿½lectionnez le seuil");
 		batthaText = new JTextField("0.0005", 5);
 		batthaButton = new JButton("Distance de Bhattacharya");
 		batthaButton.addActionListener(new ActionListener() {
@@ -157,7 +157,7 @@ public class InfosPanel extends JPanel {
 	}
 	
 	public static void battha() {
-		final OJDBC dB = new OJDBC();
+		final OJDBC dB = new OJDBC();		
 		dB.bhattacharyaHist(iD.getFileName(), Double.valueOf(batthaText.getText()));
 	}
 

@@ -85,6 +85,7 @@ public class OJDBC {
 
 			for (int i = 0; i < elements.length; i++) {
 				al.add(elements[i].stringValue());
+				System.out.println("function "+elements[i].stringValue());
 			}
 
 			preparedStatement.close();
