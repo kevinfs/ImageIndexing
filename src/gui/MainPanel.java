@@ -140,6 +140,7 @@ public class MainPanel extends JPanel implements ListSelectionListener {
 		ImageIcon icon = new ImageIcon(path);
 		System.out.println(path);
 		picture.setIcon(icon);
+		infosPanel.updateFile(path);
 	}
 
 	MouseListener mouseListener = new MouseAdapter() {
@@ -156,7 +157,7 @@ public class MainPanel extends JPanel implements ListSelectionListener {
 			if (index >= 0) {
 				Object o = theList.getModel().getElementAt(index);
 				System.out.println("Single-clicked on: " + o.toString());
-				infosPanel.updateFile(o.toString());
+				//infosPanel.updateFile(o.toString());
 			}
 		}
 	};
