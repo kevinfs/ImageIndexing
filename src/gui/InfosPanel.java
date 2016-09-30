@@ -146,6 +146,8 @@ public class InfosPanel extends JPanel {
 		});
 
 		oraclePanel = new JPanel(new FlowLayout());
+		oraclePanel.add(oracleColor);
+		oraclePanel.add(oracleColorText);
 		oraclePanel.add(oracleTexture);
 		oraclePanel.add(oracleTextureText);
 		oraclePanel.add(oracleShape);
