@@ -36,3 +36,4 @@ hs_err_pid*
 *.cb2
 *.synctex.gz
 doc/Rapport.pdf
+doc/*eps-converted-to.pdf
